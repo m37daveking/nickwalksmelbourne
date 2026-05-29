@@ -10,18 +10,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
+      --page: #fdfcf8;
       --ink: #1c1c1c;
       --lime: #e9f0a6;
       --cream: #f2ebe5;
       --peach: #f1d3c5;
+      --forest: #2a7a40;
       --mono: 'JetBrains Mono', 'Courier New', monospace;
       --display: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
       --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      background: var(--ink);
-      color: var(--cream);
+      background: var(--page);
+      color: var(--ink);
       font-family: var(--mono);
       -webkit-font-smoothing: antialiased;
     }
@@ -35,13 +37,14 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--lime);
+      color: var(--ink);
       text-decoration: none;
-      border: 1px solid var(--lime);
+      border: 1px solid var(--ink);
+      background: var(--page);
       padding: 8px 14px;
       border-radius: 999px;
     }
-    .back:hover { background: var(--lime); color: var(--ink); }
+    .back:hover { background: var(--ink); color: var(--page); }
 
     /* HERO */
     .hero {
@@ -50,14 +53,14 @@
       height: 100vh;
       min-height: 760px;
       overflow: hidden;
-      background: var(--ink);
+      background: var(--page);
     }
     .grid-overlay {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(233,240,166,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(233,240,166,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(28,28,28,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28,28,28,0.07) 1px, transparent 1px);
       background-size: 80px 80px;
       pointer-events: none;
       z-index: 2;
@@ -73,11 +76,11 @@
     }
     .terrain text {
       font-family: var(--mono);
-      fill: var(--lime);
+      fill: var(--ink);
       letter-spacing: 0.04em;
     }
-    .terrain .accent { fill: var(--cream); }
-    .terrain .peach { fill: var(--peach); }
+    .terrain .accent { fill: #4a4640; }
+    .terrain .peach { fill: #c47057; }
 
     /* Reticle */
     .reticle {
@@ -92,8 +95,8 @@
     .reticle::before, .reticle::after {
       content: "";
       position: absolute;
-      background: var(--lime);
-      opacity: 0.6;
+      background: var(--ink);
+      opacity: 0.4;
     }
     .reticle::before {
       top: 50%; left: 0; width: 100%; height: 1px;
@@ -104,9 +107,9 @@
     .reticle-ring {
       position: absolute;
       inset: 0;
-      border: 1px solid var(--lime);
+      border: 1px solid var(--ink);
       border-radius: 50%;
-      opacity: 0.4;
+      opacity: 0.3;
     }
 
     /* HUD pills top-left */
@@ -159,26 +162,58 @@
       transform: translate(-50%, calc(-50% + 100px));
       display: flex;
       gap: 110px;
-      pointer-events: none;
+      pointer-events: auto;
       z-index: 5;
     }
     .badge {
+      appearance: none;
+      -webkit-appearance: none;
       background: var(--lime);
       color: var(--ink);
       font-family: var(--mono);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.05em;
-      padding: 5px 14px;
+      line-height: 1;
+      padding: 7px 14px;
       border-radius: 20px;
       border: 1.5px solid var(--ink);
       box-shadow: 0 0 0 1.5px var(--lime);
+      cursor: pointer;
+      transition: transform 0.15s ease;
     }
     .badge.outline {
       background: transparent;
-      color: var(--lime);
+      color: var(--ink);
       box-shadow: none;
-      border: 1px solid var(--lime);
+      border: 1px solid var(--ink);
+    }
+    .badge:hover { transform: scale(1.06); }
+    .badge:active { transform: scale(0.96); }
+    .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+    /* Peak ping animations */
+    .peak {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .peak .ping-ring {
+      opacity: 0;
+    }
+    .peak.active {
+      animation: peakPulse 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .peak.active .ping-ring {
+      animation: pingExpand 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes peakPulse {
+      0%   { transform: scale(1); }
+      18%  { transform: scale(1.045); }
+      100% { transform: scale(1); }
+    }
+    @keyframes pingExpand {
+      0%   { r: 8;   opacity: 0.95; stroke-width: 2.5; }
+      100% { r: 340; opacity: 0;    stroke-width: 0.3; }
     }
 
     /* Brand title bottom-left */
@@ -189,7 +224,7 @@
       font-family: var(--display);
       font-size: 13vw;
       line-height: 0.98;
-      color: var(--lime);
+      color: var(--ink);
       letter-spacing: -0.02em;
       transform: scaleY(1.08);
       transform-origin: bottom left;
@@ -210,7 +245,7 @@
       font-family: var(--serif);
       font-style: italic;
       font-size: 1.7rem;
-      color: var(--cream);
+      color: var(--ink);
       margin-bottom: 14px;
       display: flex;
       align-items: center;
@@ -220,7 +255,7 @@
     }
     .geo-icon {
       width: 24px; height: 24px;
-      background: var(--lime);
+      background: var(--ink);
       clip-path: polygon(0 0, 100% 0, 100% 40%, 40% 100%, 0 100%);
       flex-shrink: 0;
     }
@@ -228,7 +263,7 @@
       font-family: var(--serif);
       font-size: 0.95rem;
       line-height: 1.4;
-      color: rgba(242,235,229,0.65);
+      color: rgba(28,28,28,0.7);
     }
 
     /* SECTIONS */
@@ -245,8 +280,8 @@
       font-size: 10px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--lime);
-      border-top: 1px solid rgba(233,240,166,0.3);
+      color: var(--ink);
+      border-top: 1px solid rgba(28,28,28,0.2);
       padding-top: 14px;
       margin-bottom: 48px;
     }
@@ -260,8 +295,8 @@
     }
     .portrait {
       aspect-ratio: 4/5;
-      background: #1a1a18;
-      border: 1px solid rgba(233,240,166,0.35);
+      background: var(--cream);
+      border: 1px solid rgba(28,28,28,0.2);
       position: relative;
       overflow: hidden;
     }
@@ -270,14 +305,13 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: contrast(1.05) saturate(0.85) brightness(0.92);
     }
     .portrait::after {
       content: "+";
       position: absolute;
       top: 12px; right: 14px;
       font-family: var(--mono);
-      color: var(--lime);
+      color: var(--ink);
       font-size: 14px;
       z-index: 3;
     }
@@ -299,8 +333,10 @@
       font-family: var(--mono);
       font-size: 9px;
       letter-spacing: 0.14em;
-      color: var(--lime);
-      opacity: 0.8;
+      color: var(--ink);
+      background: var(--page);
+      padding: 2px 6px;
+      opacity: 0.9;
       z-index: 3;
     }
 
@@ -312,16 +348,15 @@
     }
     .strip-figure {
       position: relative;
-      border: 1px solid rgba(233,240,166,0.3);
+      border: 1px solid rgba(28,28,28,0.2);
       overflow: hidden;
-      background: var(--ink);
+      background: var(--page);
     }
     .strip-figure img {
       display: block;
       width: 100%;
       max-height: 540px;
       object-fit: cover;
-      filter: contrast(1.05) saturate(0.85) brightness(0.95);
     }
     .strip-figure .hud-tl {
       position: absolute;
@@ -340,9 +375,9 @@
       background: var(--lime);
     }
     .strip-figure .pill-mini.outline {
-      background: transparent;
-      color: var(--lime);
-      border: 1px solid var(--lime);
+      background: var(--page);
+      color: var(--ink);
+      border: 1px solid var(--ink);
     }
     .strip-figure .caption {
       position: absolute;
@@ -350,7 +385,9 @@
       font-family: var(--serif);
       font-style: italic;
       font-size: 1.4rem;
-      color: var(--cream);
+      color: var(--ink);
+      background: var(--page);
+      padding: 6px 14px;
       max-width: 60%;
     }
     .about-copy h2 {
@@ -358,7 +395,7 @@
       font-size: clamp(3rem, 6vw, 5.5rem);
       line-height: 0.9;
       letter-spacing: 0;
-      color: var(--cream);
+      color: var(--ink);
       transform: scaleY(1.1);
       transform-origin: top left;
       margin-bottom: 32px;
@@ -367,7 +404,9 @@
       font-family: var(--serif);
       font-weight: 400;
       font-style: italic;
-      color: var(--lime);
+      color: var(--ink);
+      background: var(--lime);
+      padding: 0 0.18em;
       letter-spacing: -0.01em;
       transform: scaleY(0.95);
       display: inline-block;
@@ -376,7 +415,7 @@
       font-family: var(--serif);
       font-size: 1.15rem;
       line-height: 1.5;
-      color: var(--cream);
+      color: var(--ink);
       max-width: 540px;
       margin-bottom: 1rem;
     }
@@ -384,18 +423,18 @@
     /* Walks */
     .walks { padding-top: 0; }
     .walk-card {
-      border-top: 1px solid rgba(233,240,166,0.3);
+      border-top: 1px solid rgba(28,28,28,0.18);
       padding: 56px 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
       align-items: center;
     }
-    .walk-card:last-of-type { border-bottom: 1px solid rgba(233,240,166,0.3); }
+    .walk-card:last-of-type { border-bottom: 1px solid rgba(28,28,28,0.18); }
     .walk-viz {
       aspect-ratio: 4/3;
-      background: var(--ink);
-      border: 1px solid rgba(233,240,166,0.3);
+      background: var(--page);
+      border: 1px solid rgba(28,28,28,0.18);
       position: relative;
       overflow: hidden;
     }
@@ -404,7 +443,8 @@
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.18em;
-      color: var(--lime);
+      color: var(--ink);
+      opacity: 0.7;
       text-transform: uppercase;
       margin-bottom: 16px;
     }
@@ -412,7 +452,7 @@
       font-family: var(--display);
       font-size: clamp(2.6rem, 5vw, 4.2rem);
       line-height: 0.9;
-      color: var(--cream);
+      color: var(--ink);
       transform: scaleY(1.1);
       transform-origin: top left;
       margin-bottom: 24px;
@@ -421,7 +461,7 @@
       font-family: var(--serif);
       font-size: 1.1rem;
       line-height: 1.5;
-      color: rgba(242,235,229,0.78);
+      color: rgba(28,28,28,0.78);
       max-width: 480px;
       margin-bottom: 24px;
     }
@@ -470,14 +510,16 @@
       font-family: var(--serif);
       font-style: italic;
       font-size: clamp(2rem, 5vw, 4rem);
-      line-height: 1.05;
-      color: var(--cream);
+      line-height: 1.15;
+      color: var(--ink);
       max-width: 1000px;
       margin: 0 auto;
     }
     .quote-sect blockquote em {
       font-style: normal;
-      color: var(--lime);
+      color: var(--ink);
+      background: var(--lime);
+      padding: 0 0.2em;
     }
     .quote-sect cite {
       display: block;
@@ -487,8 +529,8 @@
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--lime);
-      opacity: 0.8;
+      color: var(--ink);
+      opacity: 0.7;
     }
 
     footer {
@@ -499,8 +541,8 @@
       font-size: 10px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(233,240,166,0.5);
-      border-top: 1px solid rgba(233,240,166,0.2);
+      color: rgba(28,28,28,0.6);
+      border-top: 1px solid rgba(28,28,28,0.15);
     }
 
     @media (max-width: 900px) {
@@ -536,37 +578,41 @@
         <path id="ringB4" d="M 460,560 m -420,-40 a 420,400 10 1,1 840,80 a 420,400 10 1,1 -840,-80" />
       </defs>
 
-      <!-- Peak A contours -->
-      <text font-size="13" opacity="0.95">
-        <textPath href="#ringA1" startOffset="0">LUNCH · LUNCH · LUNCH · 45MIN · CBD · SPRING · BOURKE · LUNCH · LUNCH · 45MIN · CBD · </textPath>
-      </text>
-      <text font-size="12" opacity="0.7" class="accent">
-        <textPath href="#ringA2" startOffset="0">--- TOP END --- SPRING STREET --- DOWN BOURKE --- BACK UP --- TOP END --- SPRING STREET --- DOWN BOURKE --- </textPath>
-      </text>
-      <text font-size="11" opacity="0.55">
-        <textPath href="#ringA3" startOffset="0">corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · </textPath>
-      </text>
-      <text font-size="10" opacity="0.4">
-        <textPath href="#ringA4" startOffset="0">notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · </textPath>
-      </text>
+      <!-- Peak A — Lunch loop -->
+      <g class="peak" id="peakA">
+        <circle class="ping-ring" cx="1180" cy="420" r="0" fill="none" stroke="#1c1c1c" stroke-width="2" />
+        <text font-size="13" opacity="0.95">
+          <textPath href="#ringA1" startOffset="0">LUNCH · LUNCH · LUNCH · 45MIN · CBD · SPRING · BOURKE · LUNCH · LUNCH · 45MIN · CBD · </textPath>
+        </text>
+        <text font-size="12" opacity="0.7" class="accent">
+          <textPath href="#ringA2" startOffset="0">--- TOP END --- SPRING STREET --- DOWN BOURKE --- BACK UP --- TOP END --- SPRING STREET --- DOWN BOURKE --- </textPath>
+        </text>
+        <text font-size="11" opacity="0.55">
+          <textPath href="#ringA3" startOffset="0">corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · </textPath>
+        </text>
+        <text font-size="10" opacity="0.4">
+          <textPath href="#ringA4" startOffset="0">notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · </textPath>
+        </text>
+        <circle cx="1180" cy="420" r="5" fill="#1c1c1c"/>
+      </g>
 
-      <!-- Peak B contours -->
-      <text font-size="13" opacity="0.95">
-        <textPath href="#ringB1" startOffset="0">TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · </textPath>
-      </text>
-      <text font-size="12" opacity="0.7" class="accent">
-        <textPath href="#ringB2" startOffset="0">--- STATION TO STATION --- CROSS THE RIVER --- PARKS --- THE LONG WAY --- STATION TO STATION --- CROSS THE RIVER --- PARKS --- </textPath>
-      </text>
-      <text font-size="11" opacity="0.55">
-        <textPath href="#ringB3" startOffset="0">park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · </textPath>
-      </text>
-      <text font-size="10" opacity="0.4" class="peach">
-        <textPath href="#ringB4" startOffset="0">slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · </textPath>
-      </text>
-
-      <!-- Peak markers -->
-      <circle cx="1180" cy="420" r="5" fill="#e9f0a6"/>
-      <circle cx="460" cy="560" r="5" fill="#e9f0a6"/>
+      <!-- Peak B — Train walk -->
+      <g class="peak" id="peakB">
+        <circle class="ping-ring" cx="460" cy="560" r="0" fill="none" stroke="#1c1c1c" stroke-width="2" />
+        <text font-size="13" opacity="0.95">
+          <textPath href="#ringB1" startOffset="0">TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · </textPath>
+        </text>
+        <text font-size="12" opacity="0.7" class="accent">
+          <textPath href="#ringB2" startOffset="0">--- STATION TO STATION --- CROSS THE RIVER --- PARKS --- THE LONG WAY --- STATION TO STATION --- CROSS THE RIVER --- PARKS --- </textPath>
+        </text>
+        <text font-size="11" opacity="0.55">
+          <textPath href="#ringB3" startOffset="0">park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · </textPath>
+        </text>
+        <text font-size="10" opacity="0.4" class="peach">
+          <textPath href="#ringB4" startOffset="0">slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · </textPath>
+        </text>
+        <circle cx="460" cy="560" r="5" fill="#1c1c1c"/>
+      </g>
     </svg>
 
     <div class="grid-overlay"></div>
@@ -576,8 +622,8 @@
     </div>
 
     <div class="center-pills">
-      <div class="badge">(LUNCH LOOP)</div>
-      <div class="badge outline">(TRAIN LINE)</div>
+      <button type="button" class="badge" data-peak="peakA" aria-label="Ping lunch loop">(LUNCH LOOP)</button>
+      <button type="button" class="badge outline" data-peak="peakB" aria-label="Ping train line">(TRAIN LINE)</button>
     </div>
 
     <h1 class="brand">NICK<br />WALKS<br />MELBOURNE</h1>
@@ -638,16 +684,16 @@
             <path id="w1r2" d="M 200,150 m -90,-6 a 90,82 -4 1,1 180,12 a 90,82 -4 1,1 -180,-12" />
             <path id="w1r3" d="M 200,150 m -140,-12 a 140,128 -6 1,1 280,24 a 140,128 -6 1,1 -280,-24" />
           </defs>
-          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#e9f0a6">
+          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#1c1c1c">
             <textPath href="#w1r1">LUNCH · 45MIN · LUNCH · 45MIN · LUNCH · 45MIN · </textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ebe5" opacity="0.7">
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#4a4640" opacity="0.75">
             <textPath href="#w1r2">--- SPRING --- BOURKE --- SPRING --- BOURKE --- SPRING --- BOURKE --- </textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#e9f0a6" opacity="0.45">
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#1c1c1c" opacity="0.4">
             <textPath href="#w1r3">corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · </textPath>
           </text>
-          <circle cx="200" cy="150" r="3" fill="#e9f0a6"/>
+          <circle cx="200" cy="150" r="3" fill="#1c1c1c"/>
         </svg>
       </div>
       <div class="walk-info">
@@ -675,16 +721,16 @@
             <path id="w2r2" d="M 200,150 m -110,-8 a 110,98 -4 1,1 220,16 a 110,98 -4 1,1 -220,-16" />
             <path id="w2r3" d="M 200,150 m -170,-16 a 170,156 -6 1,1 340,32 a 170,156 -6 1,1 -340,-32" />
           </defs>
-          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#e9f0a6">
+          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#1c1c1c">
             <textPath href="#w2r1">TRAIN · 2HR · TRAIN · 2HR · TRAIN · 2HR · TRAIN · 2HR · </textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ebe5" opacity="0.65">
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#4a4640" opacity="0.7">
             <textPath href="#w2r2">--- STH YARRA --- ANZAC --- STH YARRA --- ANZAC --- STH YARRA --- ANZAC --- </textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#f1d3c5" opacity="0.5">
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#c47057" opacity="0.7">
             <textPath href="#w2r3">park · river · side street · detour · park · river · side street · detour · park · river · side street · detour · park · river · side street · detour · </textPath>
           </text>
-          <circle cx="200" cy="150" r="3" fill="#e9f0a6"/>
+          <circle cx="200" cy="150" r="3" fill="#1c1c1c"/>
         </svg>
       </div>
       <div class="walk-info">
@@ -713,5 +759,24 @@
     <span>Nick Walks Melbourne · 2026</span>
     <span>Concept 03 — Terrain</span>
   </footer>
+
+  <script>
+    document.querySelectorAll('button[data-peak]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var peak = document.getElementById(btn.dataset.peak);
+        if (!peak) return;
+        peak.classList.remove('active');
+        // Force reflow so the animation can restart if the button is clicked again mid-ping.
+        void peak.getBoundingClientRect();
+        peak.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.peak').forEach(function (peak) {
+      peak.addEventListener('animationend', function (e) {
+        if (e.animationName === 'peakPulse') peak.classList.remove('active');
+      });
+    });
+  </script>
 </body>
 </html>
