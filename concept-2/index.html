@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nick Walks Melbourne</title>
+  <meta name="description" content="Route briefings from Nick Heydon. Two walks across Melbourne." />
+  <style>
+    :root {
+      --sage: #a3bca2;
+      --sage-dark: #90a88f;
+      --sage-light: #b6cdb5;
+      --ink: #0b0b0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--ink);
+      color: var(--ink);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--ink); color: var(--sage); }
+
+    body {
+      position: relative;
+    }
+    .noise {
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.11;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .back {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      text-decoration: none;
+      background: var(--ink);
+      padding: 8px 16px;
+      border: 1px solid var(--sage);
+      border-radius: 999px;
+    }
+    .back:hover { background: var(--sage); color: var(--ink); }
+
+    /* HERO PANEL — Mainframe grid */
+    .panel {
+      display: grid;
+      width: calc(100vw - 20px);
+      height: calc(100vh - 20px);
+      min-height: 720px;
+      margin: 10px;
+      grid-template-columns: 320px 1fr 280px;
+      grid-template-rows: 55px 1fr 140px;
+      gap: 1.5px;
+      background: var(--ink);
+      border: 1.5px solid var(--ink);
+      position: relative;
+    }
+    .cell { background: var(--sage); position: relative; overflow: hidden; }
+
+    .h-logo {
+      grid-column: 1; grid-row: 1;
+      display: flex;
+      align-items: center;
+      padding-left: 18px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .h-logo .star { display: inline-block; margin: 0 0.4em; transform: translateY(2px); }
+    .h-meta {
+      grid-column: 2; grid-row: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    .h-nav {
+      grid-column: 3; grid-row: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .nav-item:hover { background: var(--sage-dark); }
+    .circle-icon {
+      width: 22px; height: 22px;
+      background: var(--ink);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .circle-icon svg { width: 11px; height: 11px; }
+
+    /* sidebar left */
+    .sidebar {
+      grid-column: 1;
+      grid-row: 2 / 4;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--ink);
+      border-radius: 50px;
+      padding: 5px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      width: fit-content;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      background: var(--ink);
+      border-radius: 50%;
+      animation: blink 1.6s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: 0.2 } }
+
+    .brief-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+    }
+    .brief-text {
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+    .sys-data {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      line-height: 1.6;
+      opacity: 0.85;
+      margin-top: 32px;
+    }
+    .sys-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted rgba(11,11,11,0.3);
+      margin-bottom: 4px;
+      padding-bottom: 2px;
+    }
+
+    /* canvas pane */
+    .canvas-pane {
+      grid-column: 2 / 4;
+      grid-row: 2;
+      position: relative;
+    }
+    .reg {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      z-index: 5;
+    }
+    .reg::before, .reg::after {
+      content: ""; position: absolute; background: var(--ink);
+    }
+    .reg::before { width: 100%; height: 1px; top: 7px; }
+    .reg::after { width: 1px; height: 100%; left: 7px; }
+    .reg.tl { top: 15px; left: 15px; }
+    .reg.tr { top: 15px; right: 15px; }
+    .reg.bl { bottom: 15px; left: 15px; }
+    .reg.br { bottom: 15px; right: 15px; }
+
+    .bg-typo {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      font-size: clamp(2.4rem, 7vw, 7.5rem);
+      line-height: 0.88;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--ink);
+      opacity: 0.42;
+      mix-blend-mode: color-burn;
+      pointer-events: none;
+      z-index: 1;
+      text-transform: uppercase;
+    }
+    .bg-typo .l2 { margin-left: 4vw; }
+    .bg-typo .l3 { margin-left: -1vw; }
+
+    .date-stamp {
+      position: absolute;
+      bottom: 18px;
+      left: 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      z-index: 2;
+      color: var(--ink);
+      opacity: 0.7;
+    }
+
+    .route-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+    }
+    .route-canvas svg { width: 100%; height: 100%; }
+
+    /* CTA pane */
+    .cta {
+      grid-column: 2 / 4;
+      grid-row: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      cursor: pointer;
+      transition: none;
+    }
+    .cta:hover { background: var(--ink); }
+    .cta:hover .cta-text, .cta:hover .cta-sub { color: var(--sage); }
+    .cta:hover .cta-arrow { background: var(--sage); }
+    .cta:hover .cta-arrow svg path { stroke: var(--ink); }
+    .cta-text {
+      font-size: 3.6vw;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .cta-sub {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      color: var(--ink);
+      margin-top: 4px;
+    }
+    .cta-arrow {
+      width: 56px; height: 56px;
+      background: var(--ink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cta-arrow svg { width: 22px; height: 22px; }
+
+    /* SECTIONS BELOW HERO — same dossier language */
+    .section {
+      margin: 1.5px 10px 0;
+      background: var(--sage);
+      padding: 80px 48px;
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-top: 1.5px solid var(--ink);
+      padding-top: 10px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .about h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .about p {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 560px;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .portrait {
+      aspect-ratio: 4/5;
+      background: var(--sage-dark);
+      border: 1.5px solid var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .portrait-label {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 2;
+      background: var(--sage);
+      color: var(--ink);
+      padding: 4px 8px;
+      border: 1px solid var(--ink);
+    }
+    .portrait .reg-corner {
+      position: absolute;
+      width: 12px; height: 12px;
+      z-index: 3;
+    }
+    .portrait .reg-corner::before, .portrait .reg-corner::after {
+      content: ""; position: absolute; background: var(--sage);
+    }
+    .portrait .reg-corner::before { width: 100%; height: 1px; top: 5px; }
+    .portrait .reg-corner::after { width: 1px; height: 100%; left: 5px; }
+    .portrait .reg-corner.tl { top: 8px; left: 8px; }
+    .portrait .reg-corner.tr { top: 8px; right: 8px; }
+
+    /* DOSSIER STRIP */
+    .strip {
+      margin: 1.5px 10px 0;
+      background: var(--sage);
+      padding: 56px 48px;
+    }
+    .strip-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .strip-meta {
+      border: 1.5px solid var(--ink);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--sage-dark);
+    }
+    .strip-meta .lbl {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .strip-meta .ttl {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .strip-meta .cap {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      margin-top: 18px;
+    }
+    .strip figure {
+      position: relative;
+      border: 1.5px solid var(--ink);
+      overflow: hidden;
+      background: var(--sage-dark);
+    }
+    .strip img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-height: 460px;
+    }
+
+    /* WALKS */
+    .walks-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+    .walk-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 240px;
+      gap: 0;
+      border: 1.5px solid var(--ink);
+      background: var(--sage);
+    }
+    .walk-id {
+      padding: 28px 22px;
+      border-right: 1.5px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--sage-dark);
+    }
+    .walk-id .num {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .walk-id .tag {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px dotted rgba(11,11,11,0.4);
+      padding-top: 8px;
+      margin-top: 12px;
+    }
+    .walk-body {
+      padding: 28px 32px;
+    }
+    .walk-body h3 {
+      font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .walk-body p {
+      font-size: 0.98rem;
+      line-height: 1.5;
+      font-weight: 500;
+      max-width: 540px;
+      margin-bottom: 18px;
+    }
+    .stats {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .stats span {
+      border: 1px solid var(--ink);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .walk-cta {
+      border-left: 1.5px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 28px 16px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0s;
+    }
+    .walk-cta:hover { background: var(--ink); color: var(--sage); }
+    .walk-cta:hover .arrow { background: var(--sage); }
+    .walk-cta:hover .arrow svg path { stroke: var(--ink); }
+    .walk-cta .arrow {
+      width: 56px; height: 56px;
+      background: var(--ink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .walk-cta .arrow svg { width: 20px; height: 20px; }
+    .walk-cta .label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* QUOTE PANEL */
+    .quote-panel {
+      margin: 1.5px 10px 0;
+      background: var(--ink);
+      color: var(--sage);
+      padding: 100px 48px;
+      text-align: center;
+    }
+    .quote-panel blockquote {
+      font-size: clamp(1.8rem, 4vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 900px;
+      margin: 0 auto;
+      text-transform: uppercase;
+    }
+    .quote-panel cite {
+      display: block;
+      font-style: normal;
+      margin-top: 28px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    footer {
+      margin: 1.5px 10px 10px;
+      background: var(--sage);
+      padding: 22px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1024px) {
+      .panel {
+        grid-template-columns: 1fr;
+        grid-template-rows: 55px auto auto auto;
+        height: auto;
+      }
+      .h-meta, .h-nav { display: none; }
+      .sidebar { grid-column: 1; grid-row: 2; }
+      .canvas-pane { grid-column: 1; grid-row: 3; min-height: 60vh; }
+      .cta { grid-column: 1; grid-row: 4; padding: 24px; }
+      .cta-text { font-size: 9vw; }
+      .about-grid { grid-template-columns: 1fr; }
+      .walk-row { grid-template-columns: 1fr; }
+      .walk-id, .walk-cta { border-right: none; border-bottom: 1.5px solid var(--ink); border-left: none; }
+      .section { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <a href="/" class="back">← Concepts</a>
+
+  <section class="panel">
+    <div class="cell h-logo">
+      N<span class="star">✦</span>W<span class="star">✦</span>M
+    </div>
+    <div class="cell h-meta">
+      NICK WALKS MELBOURNE<br />ROUTE BRIEFINGS // EDITION 01
+    </div>
+    <div class="cell h-nav">
+      <div class="nav-item">
+        <div class="circle-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="white" stroke-width="2.5" stroke-linecap="square"/></svg>
+        </div>
+        Walks
+      </div>
+      <div class="nav-item">
+        <div class="circle-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="white" stroke-width="2.5" stroke-linecap="square"/></svg>
+        </div>
+        Book
+      </div>
+    </div>
+
+    <div class="cell sidebar">
+      <div>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Next walk · Tue 12:30 · Available
+        </div>
+        <div>
+          <span class="brief-label">Ref: NWM-01 / Brief</span>
+          <div class="brief-text">
+            See Melbourne like you've never seen it before. With filmmaker and architectural guide Nick Heydon.
+          </div>
+        </div>
+      </div>
+      <div class="sys-data">
+        <div class="sys-row"><span>LAT</span><span>37°48'49"S</span></div>
+        <div class="sys-row"><span>LON</span><span>144°57'47"E</span></div>
+        <div class="sys-row"><span>NODE</span><span>CBD.01</span></div>
+        <div class="sys-row"><span>PACE</span><span>4.2 KM/H</span></div>
+        <div class="sys-row"><span>WX</span><span>FAIR · 17°C</span></div>
+      </div>
+    </div>
+
+    <div class="cell canvas-pane">
+      <span class="reg tl"></span>
+      <span class="reg tr"></span>
+      <span class="reg bl"></span>
+      <span class="reg br"></span>
+
+      <div class="bg-typo">
+        <div>MELBOURNE</div>
+        <div class="l2">ON FOOT</div>
+        <div class="l3">SLOWLY</div>
+      </div>
+
+      <div class="date-stamp">2026 / EDITION 01</div>
+
+      <div class="route-canvas">
+        <svg viewBox="0 0 1200 600" preserveAspectRatio="none">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(11,11,11,0.08)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"/>
+          <!-- Walk 01 — short loop -->
+          <path d="M 680 340 Q 740 280 820 290 T 920 230 T 940 320 T 820 360 T 700 360 Z" fill="none" stroke="#0b0b0b" stroke-width="2.5" stroke-dasharray="6 6"/>
+          <circle cx="680" cy="340" r="7" fill="#0b0b0b"/>
+          <text x="700" y="380" font-family="Courier New, monospace" font-size="11" fill="#0b0b0b" font-weight="700">01 · LUNCH LOOP</text>
+          <!-- Walk 02 — long line -->
+          <path d="M 180 460 Q 320 380 460 420 T 760 340 T 1040 220" fill="none" stroke="#0b0b0b" stroke-width="3"/>
+          <circle cx="180" cy="460" r="7" fill="#0b0b0b"/>
+          <circle cx="1040" cy="220" r="7" fill="#0b0b0b"/>
+          <text x="200" y="486" font-family="Courier New, monospace" font-size="11" fill="#0b0b0b" font-weight="700">02 · STH YARRA → ANZAC</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="cell cta" onclick="document.getElementById('walks').scrollIntoView({behavior:'smooth'})">
+      <div>
+        <div class="cta-sub">Pick a walk</div>
+        <div class="cta-text">Two routes available</div>
+      </div>
+      <div class="cta-arrow">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="white" stroke-width="2.5" stroke-linecap="square"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">
+          <span>Ref: NWM-01 / Operator</span>
+          <span>Section 01</span>
+        </div>
+        <h2>Melbourne is one<br />of the world's great cities.</h2>
+        <p>I absolutely love exploring what makes it special.</p>
+        <p>Join me as we uncover extraordinary buildings, fascinating characters and the big ideas that shaped the city around us. You'll learn how to spot a Modernist masterpiece, understand the stories hidden within our streets and discover details you've probably walked past hundreds of times without noticing.</p>
+        <p>Once you know what you're looking at, the whole city comes alive.</p>
+      </div>
+      <div class="portrait">
+        <span class="reg-corner tl"></span>
+        <span class="reg-corner tr"></span>
+        <img src="../preferredphoto1.jpg" alt="Nick Heydon" />
+        <span class="portrait-label">N. Heydon // 01</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <div class="strip-grid">
+      <div class="strip-meta">
+        <div>
+          <div class="lbl">Field photo</div>
+          <div class="ttl">Walk in progress</div>
+        </div>
+        <div class="cap">
+          REF: NWM-PH-02<br/>
+          LOC: SOUTH YARRA<br/>
+          PARTY: 09 PERSONS<br/>
+          NOTE: SLOW PACE OBSERVED
+        </div>
+      </div>
+      <figure>
+        <img src="../preferredphoto2.jpg" alt="A walk in progress" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="walks">
+    <div class="about-grid" style="grid-template-columns: 1fr;">
+      <div class="section-label">
+        <span>Ref: NWM-01 / Routes</span>
+        <span>Section 02 — two on offer</span>
+      </div>
+    </div>
+
+    <div class="walks-grid">
+      <div class="walk-row">
+        <div class="walk-id">
+          <div class="num">Route 01</div>
+          <div class="tag">CBD · Weekday</div>
+        </div>
+        <div class="walk-body">
+          <h3>Lunch Time Walk</h3>
+          <p>A forty-five-minute loop through the top end of the CBD. Spring Street, down Bourke, and a few corners most people walk past. The right amount of time to clear your head between meetings — or to make a Tuesday feel different.</p>
+          <div class="stats">
+            <span>45 min</span>
+            <span>$15</span>
+            <span>Top end CBD</span>
+            <span>Spring · Bourke</span>
+          </div>
+        </div>
+        <a class="walk-cta" href="#" target="_blank" rel="noopener">
+          <div class="arrow">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="white" stroke-width="2.5" stroke-linecap="square"/></svg>
+          </div>
+          <div class="label">Book on<br />TryBooking</div>
+        </a>
+      </div>
+
+      <div class="walk-row">
+        <div class="walk-id">
+          <div class="num">Route 02</div>
+          <div class="tag">Cross-river · 2 hours</div>
+        </div>
+        <div class="walk-body">
+          <h3>Train Walk</h3>
+          <p>Two hours, station to station. South Yarra to Anzac, taking the long way — through the parks, the side streets, and a few of Melbourne's better detours. End where the new line begins.</p>
+          <div class="stats">
+            <span>2 hours</span>
+            <span>$40</span>
+            <span>South Yarra → Anzac</span>
+            <span>Parkside</span>
+          </div>
+        </div>
+        <a class="walk-cta" href="#" target="_blank" rel="noopener">
+          <div class="arrow">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="white" stroke-width="2.5" stroke-linecap="square"/></svg>
+          </div>
+          <div class="label">Book on<br />TryBooking</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-panel">
+    <blockquote>A city only opens up when you slow down enough to read it.</blockquote>
+    <cite>— Nick</cite>
+  </section>
+
+  <footer>
+    <span>Nick Walks Melbourne · 2026</span>
+    <span>Concept 02 — Field Notes</span>
+  </footer>
+</body>
+</html>

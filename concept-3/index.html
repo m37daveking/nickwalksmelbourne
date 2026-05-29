@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nick Walks Melbourne</title>
+  <meta name="description" content="Two walks across Melbourne, rendered as terrain." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1c1c1c;
+      --lime: #e9f0a6;
+      --cream: #f2ebe5;
+      --peach: #f1d3c5;
+      --mono: 'JetBrains Mono', 'Courier New', monospace;
+      --display: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
+      --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--mono);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .back {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 1000;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lime);
+      text-decoration: none;
+      border: 1px solid var(--lime);
+      padding: 8px 14px;
+      border-radius: 999px;
+    }
+    .back:hover { background: var(--lime); color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 760px;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(233,240,166,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(233,240,166,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Terrain SVG */
+    .terrain {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .terrain text {
+      font-family: var(--mono);
+      fill: var(--lime);
+      letter-spacing: 0.04em;
+    }
+    .terrain .accent { fill: var(--cream); }
+    .terrain .peach { fill: var(--peach); }
+
+    /* Reticle */
+    .reticle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px; height: 60px;
+      pointer-events: none;
+      z-index: 4;
+    }
+    .reticle::before, .reticle::after {
+      content: "";
+      position: absolute;
+      background: var(--lime);
+      opacity: 0.6;
+    }
+    .reticle::before {
+      top: 50%; left: 0; width: 100%; height: 1px;
+    }
+    .reticle::after {
+      left: 50%; top: 0; width: 1px; height: 100%;
+    }
+    .reticle-ring {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--lime);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    /* HUD pills top-left */
+    .hud {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      z-index: 10;
+    }
+    .pill-tab {
+      padding: 10px 18px;
+      font-family: var(--display);
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 0.95;
+    }
+    .pill-tab .lbl {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      opacity: 0.7;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .pill-tab.lime { background: var(--lime); border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+    .pill-tab.cream { background: var(--cream); border-radius: 4px; }
+    .pill-tab.peach { background: var(--peach); border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+    .pill-tab.scale {
+      background: transparent;
+      border: 1.5px solid var(--lime);
+      color: var(--lime);
+      border-radius: 12px;
+      border-top-left-radius: 4px;
+      margin-left: 12px;
+    }
+    .pill-tab.scale .lbl { color: var(--lime); }
+
+    /* Center pills */
+    .center-pills {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, calc(-50% + 100px));
+      display: flex;
+      gap: 110px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .badge {
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--ink);
+      box-shadow: 0 0 0 1.5px var(--lime);
+    }
+    .badge.outline {
+      background: transparent;
+      color: var(--lime);
+      box-shadow: none;
+      border: 1px solid var(--lime);
+    }
+
+    /* Brand title bottom-left */
+    .brand {
+      position: absolute;
+      bottom: 12px;
+      left: 24px;
+      font-family: var(--display);
+      font-size: 13vw;
+      line-height: 0.98;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+      transform: scaleY(1.08);
+      transform-origin: bottom left;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    /* Info block bottom-right */
+    .info {
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      width: 320px;
+      text-align: right;
+      z-index: 6;
+    }
+    .info-header {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.7rem;
+      color: var(--cream);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      line-height: 1.05;
+    }
+    .geo-icon {
+      width: 24px; height: 24px;
+      background: var(--lime);
+      clip-path: polygon(0 0, 100% 0, 100% 40%, 40% 100%, 0 100%);
+      flex-shrink: 0;
+    }
+    .info-text {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: rgba(242,235,229,0.65);
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 100px 32px;
+      max-width: 1300px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .sect-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lime);
+      border-top: 1px solid rgba(233,240,166,0.3);
+      padding-top: 14px;
+      margin-bottom: 48px;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .portrait {
+      aspect-ratio: 4/5;
+      background: #1a1a18;
+      border: 1px solid rgba(233,240,166,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.05) saturate(0.85) brightness(0.92);
+    }
+    .portrait::after {
+      content: "+";
+      position: absolute;
+      top: 12px; right: 14px;
+      font-family: var(--mono);
+      color: var(--lime);
+      font-size: 14px;
+      z-index: 3;
+    }
+    .portrait .plabel {
+      position: absolute;
+      bottom: 12px; left: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      background: var(--lime);
+      padding: 4px 8px;
+      text-transform: uppercase;
+      z-index: 3;
+    }
+    .portrait .ticks {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--lime);
+      opacity: 0.8;
+      z-index: 3;
+    }
+
+    /* TERRAIN PHOTO STRIP */
+    .strip {
+      padding: 0 32px 100px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .strip-figure {
+      position: relative;
+      border: 1px solid rgba(233,240,166,0.3);
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .strip-figure img {
+      display: block;
+      width: 100%;
+      max-height: 540px;
+      object-fit: cover;
+      filter: contrast(1.05) saturate(0.85) brightness(0.95);
+    }
+    .strip-figure .hud-tl {
+      position: absolute;
+      top: 16px; left: 16px;
+      display: flex;
+      gap: 4px;
+      z-index: 2;
+    }
+    .strip-figure .pill-mini {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--lime);
+    }
+    .strip-figure .pill-mini.outline {
+      background: transparent;
+      color: var(--lime);
+      border: 1px solid var(--lime);
+    }
+    .strip-figure .caption {
+      position: absolute;
+      bottom: 16px; left: 16px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--cream);
+      max-width: 60%;
+    }
+    .about-copy h2 {
+      font-family: var(--display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.9;
+      letter-spacing: 0;
+      color: var(--cream);
+      transform: scaleY(1.1);
+      transform-origin: top left;
+      margin-bottom: 32px;
+    }
+    .about-copy h2 em {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--lime);
+      letter-spacing: -0.01em;
+      transform: scaleY(0.95);
+      display: inline-block;
+    }
+    .about-copy p {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--cream);
+      max-width: 540px;
+      margin-bottom: 1rem;
+    }
+
+    /* Walks */
+    .walks { padding-top: 0; }
+    .walk-card {
+      border-top: 1px solid rgba(233,240,166,0.3);
+      padding: 56px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .walk-card:last-of-type { border-bottom: 1px solid rgba(233,240,166,0.3); }
+    .walk-viz {
+      aspect-ratio: 4/3;
+      background: var(--ink);
+      border: 1px solid rgba(233,240,166,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .walk-viz svg { width: 100%; height: 100%; }
+    .walk-info .num {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--lime);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .walk-info h3 {
+      font-family: var(--display);
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      line-height: 0.9;
+      color: var(--cream);
+      transform: scaleY(1.1);
+      transform-origin: top left;
+      margin-bottom: 24px;
+    }
+    .walk-info p {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: rgba(242,235,229,0.78);
+      max-width: 480px;
+      margin-bottom: 24px;
+    }
+    .walk-stats-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .walk-stats-row .s {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      color: var(--ink);
+    }
+    .s.s1 { background: var(--lime); border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+    .s.s2 { background: var(--cream); }
+    .s.s3 { background: var(--peach); border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+    .book {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+    .book:hover { background: var(--cream); }
+    .book svg { width: 14px; height: 14px; }
+
+    /* Quote */
+    .quote-sect {
+      padding: 140px 32px;
+      text-align: center;
+    }
+    .quote-sect blockquote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.05;
+      color: var(--cream);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .quote-sect blockquote em {
+      font-style: normal;
+      color: var(--lime);
+    }
+    .quote-sect cite {
+      display: block;
+      margin-top: 36px;
+      font-family: var(--mono);
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lime);
+      opacity: 0.8;
+    }
+
+    footer {
+      padding: 30px 32px;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(233,240,166,0.5);
+      border-top: 1px solid rgba(233,240,166,0.2);
+    }
+
+    @media (max-width: 900px) {
+      .hud { gap: 4px; }
+      .pill-tab { padding: 8px 12px; font-size: 1.1rem; }
+      .pill-tab.scale { margin-left: 6px; }
+      .info { width: auto; left: 24px; right: 24px; bottom: 24px; }
+      .brand { font-size: 28vw; }
+      .center-pills { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .walk-card { grid-template-columns: 1fr; gap: 32px; }
+      .section { padding: 60px 24px; }
+      .back { top: 16px; right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="back">← Concepts</a>
+
+  <section class="hero">
+    <svg class="terrain" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <!-- Peak A — CBD (small) -->
+        <path id="ringA1" d="M 1180,420 m -90,0 a 90,82 0 1,1 180,0 a 90,82 0 1,1 -180,0" />
+        <path id="ringA2" d="M 1180,420 m -150,-10 a 150,135 -8 1,1 300,20 a 150,135 -8 1,1 -300,-20" />
+        <path id="ringA3" d="M 1180,420 m -220,-20 a 220,205 -12 1,1 440,40 a 220,205 -12 1,1 -440,-40" />
+        <path id="ringA4" d="M 1180,420 m -300,-30 a 300,280 -10 1,1 600,60 a 300,280 -10 1,1 -600,-60" />
+
+        <!-- Peak B — South Yarra / Anzac (larger) -->
+        <path id="ringB1" d="M 460,560 m -110,0 a 110,100 6 1,1 220,0 a 110,100 6 1,1 -220,0" />
+        <path id="ringB2" d="M 460,560 m -200,-8 a 200,180 6 1,1 400,16 a 200,180 6 1,1 -400,-16" />
+        <path id="ringB3" d="M 460,560 m -300,-20 a 300,280 8 1,1 600,40 a 300,280 8 1,1 -600,-40" />
+        <path id="ringB4" d="M 460,560 m -420,-40 a 420,400 10 1,1 840,80 a 420,400 10 1,1 -840,-80" />
+      </defs>
+
+      <!-- Peak A contours -->
+      <text font-size="13" opacity="0.95">
+        <textPath href="#ringA1" startOffset="0">LUNCH · LUNCH · LUNCH · 45MIN · CBD · SPRING · BOURKE · LUNCH · LUNCH · 45MIN · CBD · </textPath>
+      </text>
+      <text font-size="12" opacity="0.7" class="accent">
+        <textPath href="#ringA2" startOffset="0">--- TOP END --- SPRING STREET --- DOWN BOURKE --- BACK UP --- TOP END --- SPRING STREET --- DOWN BOURKE --- </textPath>
+      </text>
+      <text font-size="11" opacity="0.55">
+        <textPath href="#ringA3" startOffset="0">corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · </textPath>
+      </text>
+      <text font-size="10" opacity="0.4">
+        <textPath href="#ringA4" startOffset="0">notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · </textPath>
+      </text>
+
+      <!-- Peak B contours -->
+      <text font-size="13" opacity="0.95">
+        <textPath href="#ringB1" startOffset="0">TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · </textPath>
+      </text>
+      <text font-size="12" opacity="0.7" class="accent">
+        <textPath href="#ringB2" startOffset="0">--- STATION TO STATION --- CROSS THE RIVER --- PARKS --- THE LONG WAY --- STATION TO STATION --- CROSS THE RIVER --- PARKS --- </textPath>
+      </text>
+      <text font-size="11" opacity="0.55">
+        <textPath href="#ringB3" startOffset="0">park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · </textPath>
+      </text>
+      <text font-size="10" opacity="0.4" class="peach">
+        <textPath href="#ringB4" startOffset="0">slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · </textPath>
+      </text>
+
+      <!-- Peak markers -->
+      <circle cx="1180" cy="420" r="5" fill="#e9f0a6"/>
+      <circle cx="460" cy="560" r="5" fill="#e9f0a6"/>
+    </svg>
+
+    <div class="grid-overlay"></div>
+
+    <div class="reticle">
+      <div class="reticle-ring"></div>
+    </div>
+
+    <div class="center-pills">
+      <div class="badge">(LUNCH LOOP)</div>
+      <div class="badge outline">(TRAIN LINE)</div>
+    </div>
+
+    <h1 class="brand">NICK<br />WALKS<br />MELBOURNE</h1>
+
+    <div class="info">
+      <div class="info-header">
+        See Melbourne <br />like never before.
+        <div class="geo-icon"></div>
+      </div>
+      <p class="info-text">
+        Join filmmaker and architectural guide Nick Heydon for two walks across the city.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sect-label">
+      <span>// 01 — Operator</span>
+      <span>Nick Heydon</span>
+    </div>
+    <div class="about-grid">
+      <div class="portrait">
+        <span class="ticks">+ 37.8°S / 144.9°E</span>
+        <img src="../preferredphoto1.jpg" alt="Nick Heydon" />
+        <span class="plabel">N. Heydon · operator</span>
+      </div>
+      <div class="about-copy">
+        <h2>Melbourne is <em>one of the</em><br />world's great cities.</h2>
+        <p>I absolutely love exploring what makes it special.</p>
+        <p>Join me as we uncover extraordinary buildings, fascinating characters and the big ideas that shaped the city around us. You'll learn how to spot a Modernist masterpiece, understand the stories hidden within our streets and discover details you've probably walked past hundreds of times without noticing.</p>
+        <p>Once you know what you're looking at, the whole city comes alive.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <div class="strip-figure">
+      <div class="hud-tl">
+        <span class="pill-mini">FIELD</span>
+        <span class="pill-mini outline">SOUTH YARRA · 02</span>
+      </div>
+      <img src="../preferredphoto2.jpg" alt="A walk in progress" />
+      <div class="caption">"Slow enough to notice."</div>
+    </div>
+  </section>
+
+  <section class="section walks">
+    <div class="sect-label">
+      <span>// 02 — Routes</span>
+      <span>Two on offer</span>
+    </div>
+
+    <div class="walk-card">
+      <div class="walk-viz">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <path id="w1r1" d="M 200,150 m -50,0 a 50,46 0 1,1 100,0 a 50,46 0 1,1 -100,0" />
+            <path id="w1r2" d="M 200,150 m -90,-6 a 90,82 -4 1,1 180,12 a 90,82 -4 1,1 -180,-12" />
+            <path id="w1r3" d="M 200,150 m -140,-12 a 140,128 -6 1,1 280,24 a 140,128 -6 1,1 -280,-24" />
+          </defs>
+          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#e9f0a6">
+            <textPath href="#w1r1">LUNCH · 45MIN · LUNCH · 45MIN · LUNCH · 45MIN · </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ebe5" opacity="0.7">
+            <textPath href="#w1r2">--- SPRING --- BOURKE --- SPRING --- BOURKE --- SPRING --- BOURKE --- </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#e9f0a6" opacity="0.45">
+            <textPath href="#w1r3">corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · </textPath>
+          </text>
+          <circle cx="200" cy="150" r="3" fill="#e9f0a6"/>
+        </svg>
+      </div>
+      <div class="walk-info">
+        <div class="num">// Route 01</div>
+        <h3>Lunch Time Walk</h3>
+        <p>A forty-five-minute loop through the top end of the CBD. Spring Street, down Bourke, and a few corners most people walk past. The right amount of time to clear your head between meetings — or to make a Tuesday feel different.</p>
+        <div class="walk-stats-row">
+          <span class="s s1">45 MIN</span>
+          <span class="s s2">$15</span>
+          <span class="s s3">CBD TOP END</span>
+        </div>
+        <a class="book" href="#" target="_blank" rel="noopener">
+          Book on TryBooking
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="walk-card">
+      <div class="walk-viz">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <path id="w2line" d="M 60,220 Q 140,160 220,180 T 360,80" />
+            <path id="w2r1" d="M 200,150 m -60,0 a 60,54 0 1,1 120,0 a 60,54 0 1,1 -120,0" />
+            <path id="w2r2" d="M 200,150 m -110,-8 a 110,98 -4 1,1 220,16 a 110,98 -4 1,1 -220,-16" />
+            <path id="w2r3" d="M 200,150 m -170,-16 a 170,156 -6 1,1 340,32 a 170,156 -6 1,1 -340,-32" />
+          </defs>
+          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#e9f0a6">
+            <textPath href="#w2r1">TRAIN · 2HR · TRAIN · 2HR · TRAIN · 2HR · TRAIN · 2HR · </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ebe5" opacity="0.65">
+            <textPath href="#w2r2">--- STH YARRA --- ANZAC --- STH YARRA --- ANZAC --- STH YARRA --- ANZAC --- </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#f1d3c5" opacity="0.5">
+            <textPath href="#w2r3">park · river · side street · detour · park · river · side street · detour · park · river · side street · detour · park · river · side street · detour · </textPath>
+          </text>
+          <circle cx="200" cy="150" r="3" fill="#e9f0a6"/>
+        </svg>
+      </div>
+      <div class="walk-info">
+        <div class="num">// Route 02</div>
+        <h3>Train Walk</h3>
+        <p>Two hours, station to station. South Yarra to Anzac, taking the long way — through the parks, the side streets, and a few of Melbourne's better detours. End where the new line begins.</p>
+        <div class="walk-stats-row">
+          <span class="s s1">2 HOURS</span>
+          <span class="s s2">$40</span>
+          <span class="s s3">STH YARRA → ANZAC</span>
+        </div>
+        <a class="book" href="#" target="_blank" rel="noopener">
+          Book on TryBooking
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-sect">
+    <blockquote>"A city only <em>opens up</em> when you slow down enough to read it."</blockquote>
+    <cite>— Nick</cite>
+  </section>
+
+  <footer>
+    <span>Nick Walks Melbourne · 2026</span>
+    <span>Concept 03 — Terrain</span>
+  </footer>
+</body>
+</html>
