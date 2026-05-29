@@ -7,7 +7,7 @@
   <meta name="description" content="Two walks across Melbourne, rendered as terrain." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --page: #fdfcf8;
@@ -17,7 +17,7 @@
       --peach: #f1d3c5;
       --forest: #2a7a40;
       --mono: 'JetBrains Mono', 'Courier New', monospace;
-      --display: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
+      --display: 'Inter', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
       --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -192,42 +192,35 @@
     .badge:active { transform: scale(0.96); }
     .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
-    /* Peak ping animations */
-    .peak {
-      transform-box: fill-box;
-      transform-origin: center;
+    /* Peak spin — each ring layer rotates at its own pace */
+    #peakA text { transform-origin: 1180px 420px; }
+    #peakB text { transform-origin: 460px 560px; }
+
+    .peak.active text:nth-of-type(1) { animation: spinFwd 12s linear; }
+    .peak.active text:nth-of-type(2) { animation: spinRev 18s linear; }
+    .peak.active text:nth-of-type(3) { animation: spinFwd 26s linear; }
+    .peak.active text:nth-of-type(4) { animation: spinRev 36s linear; }
+
+    @keyframes spinFwd {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
-    .peak .ping-ring {
-      opacity: 0;
-    }
-    .peak.active {
-      animation: peakPulse 1.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .peak.active .ping-ring {
-      animation: pingExpand 1.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes peakPulse {
-      0%   { transform: scale(1); }
-      18%  { transform: scale(1.045); }
-      100% { transform: scale(1); }
-    }
-    @keyframes pingExpand {
-      0%   { r: 8;   opacity: 0.95; stroke-width: 2.5; }
-      100% { r: 340; opacity: 0;    stroke-width: 0.3; }
+    @keyframes spinRev {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
     }
 
     /* Brand title bottom-left */
     .brand {
       position: absolute;
-      bottom: 12px;
+      top: 6vh;
       left: 24px;
       font-family: var(--display);
-      font-size: 13vw;
-      line-height: 0.98;
+      font-weight: 500;
+      font-size: 10vw;
+      line-height: 0.96;
       color: var(--ink);
-      letter-spacing: -0.02em;
-      transform: scaleY(1.08);
-      transform-origin: bottom left;
+      letter-spacing: -0.035em;
       z-index: 6;
       pointer-events: none;
     }
@@ -235,7 +228,7 @@
     /* Info block bottom-right */
     .info {
       position: absolute;
-      bottom: 32px;
+      top: 6vh;
       right: 32px;
       width: 320px;
       text-align: right;
@@ -392,12 +385,11 @@
     }
     .about-copy h2 {
       font-family: var(--display);
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: 0.9;
-      letter-spacing: 0;
+      font-weight: 500;
+      font-size: clamp(2.4rem, 4.6vw, 4.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
       color: var(--ink);
-      transform: scaleY(1.1);
-      transform-origin: top left;
       margin-bottom: 32px;
     }
     .about-copy h2 em {
@@ -408,7 +400,6 @@
       background: var(--lime);
       padding: 0 0.18em;
       letter-spacing: -0.01em;
-      transform: scaleY(0.95);
       display: inline-block;
     }
     .about-copy p {
@@ -450,11 +441,11 @@
     }
     .walk-info h3 {
       font-family: var(--display);
-      font-size: clamp(2.6rem, 5vw, 4.2rem);
-      line-height: 0.9;
+      font-weight: 500;
+      font-size: clamp(2rem, 3.8vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
       color: var(--ink);
-      transform: scaleY(1.1);
-      transform-origin: top left;
       margin-bottom: 24px;
     }
     .walk-info p {
@@ -549,7 +540,7 @@
       .hud { gap: 4px; }
       .pill-tab { padding: 8px 12px; font-size: 1.1rem; }
       .pill-tab.scale { margin-left: 6px; }
-      .info { width: auto; left: 24px; right: 24px; bottom: 24px; }
+      .info { width: auto; left: 24px; right: 24px; top: auto; bottom: 24px; }
       .brand { font-size: 28vw; }
       .center-pills { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -580,7 +571,6 @@
 
       <!-- Peak A — Lunch loop -->
       <g class="peak" id="peakA">
-        <circle class="ping-ring" cx="1180" cy="420" r="0" fill="none" stroke="#1c1c1c" stroke-width="2" />
         <text font-size="13" opacity="0.95">
           <textPath href="#ringA1" startOffset="0">LUNCH · LUNCH · LUNCH · 45MIN · CBD · SPRING · BOURKE · LUNCH · LUNCH · 45MIN · CBD · </textPath>
         </text>
@@ -598,7 +588,6 @@
 
       <!-- Peak B — Train walk -->
       <g class="peak" id="peakB">
-        <circle class="ping-ring" cx="460" cy="560" r="0" fill="none" stroke="#1c1c1c" stroke-width="2" />
         <text font-size="13" opacity="0.95">
           <textPath href="#ringB1" startOffset="0">TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · </textPath>
         </text>
@@ -622,11 +611,11 @@
     </div>
 
     <div class="center-pills">
-      <button type="button" class="badge" data-peak="peakA" aria-label="Ping lunch loop">(LUNCH LOOP)</button>
-      <button type="button" class="badge outline" data-peak="peakB" aria-label="Ping train line">(TRAIN LINE)</button>
+      <button type="button" class="badge" data-peak="peakA" aria-label="Spin lunch loop">Lunch Loop</button>
+      <button type="button" class="badge outline" data-peak="peakB" aria-label="Spin train line">Train Line</button>
     </div>
 
-    <h1 class="brand">NICK<br />WALKS<br />MELBOURNE</h1>
+    <h1 class="brand">Nick<br />Walks<br />Melbourne</h1>
 
     <div class="info">
       <div class="info-header">
@@ -766,15 +755,19 @@
         var peak = document.getElementById(btn.dataset.peak);
         if (!peak) return;
         peak.classList.remove('active');
-        // Force reflow so the animation can restart if the button is clicked again mid-ping.
+        // Force reflow so the animations can restart if the button is clicked again mid-spin.
         void peak.getBoundingClientRect();
         peak.classList.add('active');
       });
     });
 
     document.querySelectorAll('.peak').forEach(function (peak) {
-      peak.addEventListener('animationend', function (e) {
-        if (e.animationName === 'peakPulse') peak.classList.remove('active');
+      var texts = peak.querySelectorAll('text');
+      if (!texts.length) return;
+      // The outermost ring (last text) has the longest spin — wait for it to finish.
+      var slowest = texts[texts.length - 1];
+      slowest.addEventListener('animationend', function () {
+        peak.classList.remove('active');
       });
     });
   </script>
