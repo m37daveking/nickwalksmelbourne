@@ -159,7 +159,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, calc(-50% + 100px));
+      transform: translate(-50%, calc(-50% + 180px));
       display: flex;
       gap: 110px;
       pointer-events: auto;
@@ -213,7 +213,7 @@
     /* Brand title bottom-left */
     .brand {
       position: absolute;
-      top: 6vh;
+      top: 14vh;
       left: 24px;
       font-family: var(--display);
       font-weight: 500;
@@ -225,10 +225,10 @@
       pointer-events: none;
     }
 
-    /* Info block bottom-right */
+    /* Info block bottom-right (above the fold) */
     .info {
       position: absolute;
-      top: 6vh;
+      bottom: 6vh;
       right: 32px;
       width: 320px;
       text-align: right;
@@ -240,23 +240,29 @@
       font-size: 1.7rem;
       color: var(--ink);
       margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
       line-height: 1.05;
-    }
-    .geo-icon {
-      width: 24px; height: 24px;
-      background: var(--ink);
-      clip-path: polygon(0 0, 100% 0, 100% 40%, 40% 100%, 0 100%);
-      flex-shrink: 0;
     }
     .info-text {
       font-family: var(--serif);
       font-size: 0.95rem;
       line-height: 1.4;
       color: rgba(28,28,28,0.7);
+    }
+    .info-pills {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .info-pills .badge {
+      font-size: 9px;
+      padding: 5px 10px;
+      border-radius: 14px;
+      box-shadow: 0 0 0 1px var(--lime);
+      border-width: 1px;
+    }
+    .info-pills .badge.outline {
+      box-shadow: none;
     }
 
     /* SECTIONS */
@@ -542,7 +548,6 @@
       .pill-tab.scale { margin-left: 6px; }
       .info { width: auto; left: 24px; right: 24px; top: auto; bottom: 24px; }
       .brand { font-size: 28vw; }
-      .center-pills { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .walk-card { grid-template-columns: 1fr; gap: 32px; }
       .section { padding: 60px 24px; }
@@ -556,11 +561,11 @@
   <section class="hero">
     <svg class="terrain" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
       <defs>
-        <!-- Peak A — CBD (small) -->
-        <path id="ringA1" d="M 1180,420 m -90,0 a 90,82 0 1,1 180,0 a 90,82 0 1,1 -180,0" />
-        <path id="ringA2" d="M 1180,420 m -150,-10 a 150,135 -8 1,1 300,20 a 150,135 -8 1,1 -300,-20" />
-        <path id="ringA3" d="M 1180,420 m -220,-20 a 220,205 -12 1,1 440,40 a 220,205 -12 1,1 -440,-40" />
-        <path id="ringA4" d="M 1180,420 m -300,-30 a 300,280 -10 1,1 600,60 a 300,280 -10 1,1 -600,-60" />
+        <!-- Peak A — CBD (small, 30% smaller) -->
+        <path id="ringA1" d="M 1180,420 m -63,0 a 63,57 0 1,1 126,0 a 63,57 0 1,1 -126,0" />
+        <path id="ringA2" d="M 1180,420 m -105,-7 a 105,94 -8 1,1 210,14 a 105,94 -8 1,1 -210,-14" />
+        <path id="ringA3" d="M 1180,420 m -154,-14 a 154,143 -12 1,1 308,28 a 154,143 -12 1,1 -308,-28" />
+        <path id="ringA4" d="M 1180,420 m -210,-21 a 210,196 -10 1,1 420,42 a 210,196 -10 1,1 -420,-42" />
 
         <!-- Peak B — South Yarra / Anzac (larger) -->
         <path id="ringB1" d="M 460,560 m -110,0 a 110,100 6 1,1 220,0 a 110,100 6 1,1 -220,0" />
@@ -610,21 +615,19 @@
       <div class="reticle-ring"></div>
     </div>
 
-    <div class="center-pills">
-      <button type="button" class="badge" data-peak="peakA" aria-label="Spin lunch loop">Lunch Loop</button>
-      <button type="button" class="badge outline" data-peak="peakB" aria-label="Spin train line">Train Line</button>
-    </div>
-
     <h1 class="brand">Nick<br />Walks<br />Melbourne</h1>
 
     <div class="info">
       <div class="info-header">
         See Melbourne <br />like never before.
-        <div class="geo-icon"></div>
       </div>
       <p class="info-text">
         Join filmmaker and architectural guide Nick Heydon for two walks across the city.
       </p>
+      <div class="info-pills">
+        <button type="button" class="badge" data-peak="peakA" aria-label="Spin lunch loop">Lunch Loop</button>
+        <button type="button" class="badge outline" data-peak="peakB" aria-label="Spin train line">Train Line</button>
+      </div>
     </div>
   </section>
 

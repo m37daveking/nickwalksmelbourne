@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nick Walks Melbourne</title>
+  <meta name="description" content="Join filmmaker and architectural guide Nick Heydon for two walks across Melbourne." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #ffffff;
+      --ink: #1a1a1a;
+      --soft: #6a6a6a;
+      --rule: rgba(26,26,26,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.35;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .back {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 7px 14px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+    }
+    .back:hover { background: var(--ink); color: var(--paper); }
+
+    /* HERO PACKAGE — top bar + photo + black band */
+    .hero-package {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* TOP BAR */
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 28px 36px;
+      gap: 24px;
+      background: var(--paper);
+    }
+    .wordmark {
+      font-size: clamp(24px, 2.4vw, 32px);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+    }
+    .wordmark span { display: block; }
+
+    .utility {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+    .util-link {
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .util-link:hover { opacity: 0.6; }
+    .util-icon {
+      appearance: none;
+      -webkit-appearance: none;
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .util-icon svg { width: 18px; height: 18px; }
+
+    /* HERO PHOTO + OVERLAY */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: #d9d6cf;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay {
+      position: absolute;
+      top: 36px;
+      left: 36px;
+      right: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      pointer-events: none;
+    }
+    .pill {
+      pointer-events: auto;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: inherit;
+      font-weight: 400;
+      font-size: clamp(20px, 2vw, 28px);
+      letter-spacing: -0.01em;
+      padding: 14px 28px;
+      border-radius: 4px;
+      border: 1px solid rgba(26,26,26,0.06);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: block;
+      text-align: left;
+    }
+    .pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(26,26,26,0.08);
+    }
+
+    /* BLACK FOOTER BAND */
+    .band {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 22px 36px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 32px;
+      font-size: 14px;
+      letter-spacing: -0.005em;
+    }
+    .band-info {
+      line-height: 1.45;
+    }
+    .band-socials {
+      display: flex;
+      gap: 14px;
+    }
+    .social-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-btn svg { width: 14px; height: 14px; }
+    .band-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 28px;
+      font-size: 14px;
+    }
+    .band-links a:hover { opacity: 0.65; }
+
+    /* SCROLL SECTIONS */
+    .lead {
+      padding: 120px 36px 60px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .lead h2 {
+      font-weight: 400;
+      font-size: clamp(36px, 4.6vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+    .lead p {
+      font-size: 18px;
+      color: var(--soft);
+      max-width: 540px;
+    }
+
+    .about {
+      padding: 80px 36px 120px;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .portrait {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: #eae6df;
+      border-radius: 2px;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .about-copy p {
+      font-size: 18px;
+      line-height: 1.55;
+      margin-bottom: 1.2rem;
+      max-width: 580px;
+    }
+    .about-copy .lead-p {
+      font-size: 22px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .about-copy p:not(.lead-p) { color: var(--soft); }
+
+    /* WALKS */
+    .walks {
+      padding: 60px 36px 120px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    .walks-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
+    .walks-head h2 {
+      font-size: clamp(28px, 3vw, 36px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+    .walks-head .count {
+      font-size: 13px;
+      color: var(--soft);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .walk {
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 48px;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+    .walk-meta .walk-num {
+      font-size: 13px;
+      color: var(--soft);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .walk-title {
+      font-size: clamp(28px, 2.6vw, 36px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .walk-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: 14px;
+      color: var(--soft);
+    }
+    .walk-stats span::after {
+      content: "·";
+      margin-left: 14px;
+      color: var(--rule);
+    }
+    .walk-stats span:last-child::after { content: none; }
+    .walk-desc p {
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--soft);
+      margin-bottom: 20px;
+      max-width: 520px;
+    }
+    .walk-cta {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      font-weight: 500;
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 2px;
+    }
+    .walk-cta:hover { opacity: 0.6; }
+    .walk-photo {
+      align-self: stretch;
+      background: #eae6df;
+      overflow: hidden;
+      border-radius: 2px;
+      min-height: 160px;
+      max-height: 220px;
+    }
+    .walk-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* PHOTO STRIP */
+    .photo-strip {
+      padding: 60px 36px 120px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+    .photo-strip figure {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .photo-strip img {
+      width: 100%;
+      height: auto;
+      max-height: 560px;
+      object-fit: cover;
+    }
+    .photo-strip figcaption {
+      font-size: 13px;
+      color: var(--soft);
+      margin-top: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    /* QUOTE */
+    .quote {
+      padding: 120px 36px;
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .quote blockquote {
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .quote cite {
+      font-style: normal;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    /* PAGE FOOTER */
+    .page-footer {
+      border-top: 1px solid var(--rule);
+      padding: 28px 36px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--soft);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 900px) {
+      .top { padding: 18px 20px; }
+      .overlay {
+        top: auto;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .band { grid-template-columns: 1fr; gap: 14px; text-align: left; }
+      .band-links { justify-content: flex-start; flex-wrap: wrap; }
+      .about { grid-template-columns: 1fr; padding: 60px 20px; gap: 36px; }
+      .portrait { max-width: 320px; }
+      .walks { padding: 40px 20px 80px; }
+      .walk { grid-template-columns: 1fr; gap: 24px; }
+      .walk-photo { max-height: 220px; }
+      .photo-strip { padding: 40px 20px 80px; }
+      .quote { padding: 80px 20px; }
+      .page-footer { flex-direction: column; gap: 12px; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="back">← Concepts</a>
+
+  <div class="hero-package">
+    <header class="top">
+      <div class="wordmark">
+        <span>Nick walks</span>
+        <span>: Melbourne</span>
+      </div>
+      <nav class="utility">
+        <a class="util-link" href="#book">Book</a>
+        <button class="util-icon" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </button>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <img src="../preferredphoto1.jpg" alt="Nick on a walk in Melbourne" />
+      <div class="overlay">
+        <a class="pill" href="#about">About Nick</a>
+        <a class="pill" href="#walks">The walks</a>
+        <a class="pill" href="#book">Book on TryBooking</a>
+      </div>
+    </section>
+
+    <div class="band">
+      <div class="band-info">
+        Walks from $15 · 45 min to 2 hours<br />
+        See Melbourne like you've never seen it before.
+      </div>
+      <div class="band-socials">
+        <a class="social-btn" href="#" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 7 9-7"/></svg>
+        </a>
+        <a class="social-btn" href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg>
+        </a>
+      </div>
+      <nav class="band-links">
+        <a href="#walks">Lunch Time Walk</a>
+        <a href="#walks">Train Walk</a>
+        <a href="#book">TryBooking</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="lead" id="about">
+    <h2>See Melbourne like you've never seen it before.</h2>
+    <p>Join filmmaker and architectural guide Nick Heydon for two walks across the city.</p>
+  </section>
+
+  <section class="about">
+    <div class="portrait">
+      <img src="../nickphoto.webp" alt="Nick Heydon" />
+    </div>
+    <div class="about-copy">
+      <p class="lead-p">Melbourne is one of the world's great cities and I absolutely love exploring what makes it special.</p>
+      <p>Join me as we uncover extraordinary buildings, fascinating characters and the big ideas that shaped the city around us. You'll learn how to spot a Modernist masterpiece, understand the stories hidden within our streets and discover details you've probably walked past hundreds of times without noticing.</p>
+      <p>Once you know what you're looking at, the whole city comes alive.</p>
+    </div>
+  </section>
+
+  <section class="walks" id="walks">
+    <div class="walks-head">
+      <h2>The walks</h2>
+      <span class="count">Two on offer</span>
+    </div>
+
+    <article class="walk">
+      <div class="walk-meta">
+        <div class="walk-num">01 — Weekday lunch</div>
+        <h3 class="walk-title">Lunch Time Walk</h3>
+        <div class="walk-stats">
+          <span>45 min</span>
+          <span>$15</span>
+          <span>Top end CBD</span>
+        </div>
+      </div>
+      <div class="walk-desc">
+        <p>A forty-five-minute loop through the top end of the CBD. Spring Street, down Bourke, and a few corners most people walk past. The right amount of time to clear your head between meetings — or to make a Tuesday feel different.</p>
+        <a class="walk-cta" href="#" target="_blank" rel="noopener">Book on TryBooking →</a>
+      </div>
+      <div class="walk-photo">
+        <img src="../nickphoto2.webp" alt="A Melbourne street on the lunch walk" />
+      </div>
+    </article>
+
+    <article class="walk">
+      <div class="walk-meta">
+        <div class="walk-num">02 — The long way</div>
+        <h3 class="walk-title">Train Walk</h3>
+        <div class="walk-stats">
+          <span>2 hours</span>
+          <span>$40</span>
+          <span>South Yarra → Anzac</span>
+        </div>
+      </div>
+      <div class="walk-desc">
+        <p>Two hours, station to station. South Yarra to Anzac, taking the long way — through the parks, the side streets, and a few of Melbourne's better detours. End where the new line begins.</p>
+        <a class="walk-cta" href="#" target="_blank" rel="noopener">Book on TryBooking →</a>
+      </div>
+      <div class="walk-photo">
+        <img src="../South_Yarra_2_dbf3cb4d2a.jpg" alt="South Yarra modernist building" />
+      </div>
+    </article>
+  </section>
+
+  <section class="photo-strip">
+    <figure>
+      <img src="../preferredphoto2.jpg" alt="A walk in progress in South Yarra" />
+      <figcaption>On a walk · South Yarra</figcaption>
+    </figure>
+  </section>
+
+  <section class="quote">
+    <blockquote>"A city only opens up when you slow down enough to read it."</blockquote>
+    <cite>— Nick</cite>
+  </section>
+
+  <footer class="page-footer">
+    <span>Nick Walks Melbourne · 2026</span>
+    <span>Concept 04 — Quiet</span>
+  </footer>
+</body>
+</html>

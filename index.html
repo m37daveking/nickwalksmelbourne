@@ -69,10 +69,13 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
     }
-    @media (max-width: 880px) {
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
       .grid { grid-template-columns: 1fr; }
     }
     .card {
@@ -367,6 +370,102 @@
       margin-left: 6px;
     }
 
+    /* THUMB 04 — Quiet */
+    .t4 {
+      background: #ffffff;
+      display: grid;
+      grid-template-rows: 22% 1fr 18%;
+    }
+    .t4 .top-bar {
+      background: #ffffff;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .t4 .mark {
+      font-size: 11px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: #1a1a1a;
+    }
+    .t4 .mark span { display: block; }
+    .t4 .util {
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      color: #1a1a1a;
+    }
+    .t4 .photo {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.15)),
+        linear-gradient(135deg, #7a8c5e 0%, #5d6e44 45%, #3d4a2c 100%);
+      overflow: hidden;
+    }
+    .t4 .photo::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 25%;
+      width: 50%;
+      height: 55%;
+      background: linear-gradient(180deg, #b8966c 0%, #8d6f49 100%);
+      border-radius: 4px 4px 0 0;
+    }
+    .t4 .photo::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 28%;
+      height: 60%;
+      background: rgba(180, 200, 220, 0.5);
+      border-radius: 4px 4px 0 0;
+    }
+    .t4 .pills {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      z-index: 2;
+    }
+    .t4 .pill-q {
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      padding: 4px 6px;
+      border-radius: 2px;
+      text-align: left;
+      letter-spacing: -0.005em;
+    }
+    .t4 .band-q {
+      background: #1a1a1a;
+      color: #ffffff;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 7px;
+      letter-spacing: 0.02em;
+    }
+    .t4 .band-q .dots {
+      display: flex;
+      gap: 3px;
+    }
+    .t4 .band-q .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
     footer {
       margin-top: 96px;
       padding-top: 24px;
@@ -380,12 +479,12 @@
   <div class="wrap">
     <header>
       <h1>Nick Walks Melbourne</h1>
-      <p>Three concepts · pick one to explore</p>
+      <p>Four concepts · pick one to explore</p>
     </header>
 
     <section class="intro">
       <h2>A first look at the site.</h2>
-      <p>Three directions for the same content. Each is a full draft page — same copy, three different feelings. Click into any one to see it in full. Then tell us which feels closest and we'll refine from there.</p>
+      <p>Four directions for the same content. Each is a full draft page — same copy, different feelings. Click into any one to see it in full. Then tell us which feels closest and we'll refine from there.</p>
     </section>
 
     <div class="grid">
@@ -468,6 +567,38 @@
           </div>
           <h3 class="card-title">Routes as topography</h3>
           <p class="card-desc">Dark slate, neon lime, Anton display. The two walks drawn as concentric typographic contours. Feels like an explorer's HUD.</p>
+        </div>
+      </a>
+
+      <a class="card" href="/concept-4">
+        <div class="thumb t4">
+          <div class="top-bar">
+            <div class="mark">
+              <span>Nick walks</span>
+              <span>: Melbourne</span>
+            </div>
+            <div class="util">EN ⌕</div>
+          </div>
+          <div class="photo">
+            <div class="pills">
+              <div class="pill-q">About Nick</div>
+              <div class="pill-q">The walks</div>
+              <div class="pill-q">Book</div>
+            </div>
+          </div>
+          <div class="band-q">
+            <span>From $15</span>
+            <span class="dots"><span class="dot"></span><span class="dot"></span></span>
+            <span>TryBooking</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-row">
+            <span class="card-num">04</span>
+            <span class="card-tag">Quiet</span>
+          </div>
+          <h3 class="card-title">Museum-quiet, photo-led</h3>
+          <p class="card-desc">After Insel Hombroich. White top bar, big photo, three pills overlaid, black footer band. Inter regular, sentence case, generous whitespace.</p>
         </div>
       </a>
     </div>
