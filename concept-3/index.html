@@ -66,12 +66,12 @@
       z-index: 2;
     }
 
-    /* Terrain SVG — one circular loop, behind the wordmark */
+    /* Terrain SVG — two concentric loops, behind the wordmark */
     .terrain {
       position: absolute;
-      top: 2vh;
-      left: -2%;
-      width: clamp(300px, 58vw, 820px);
+      top: 3vh;
+      left: 4%;
+      width: clamp(220px, 32vw, 460px);
       aspect-ratio: 1/1;
       z-index: 1;
       pointer-events: none;
@@ -475,35 +475,44 @@
     @media (max-width: 900px) {
       .hero {
         min-height: auto;
-        height: 100svh;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 20px 56px;
       }
-      .terrain { opacity: 0.85; }
-      .grid-overlay { opacity: 0.45; }
+      .terrain {
+        top: 16px;
+        left: 18px;
+      }
+      .grid-overlay { opacity: 0.4; }
       .reticle { display: none; }
 
       .brand {
-        top: 11vh;
-        left: 20px;
-        right: 20px;
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
         font-size: 14vw;
         line-height: 1;
         letter-spacing: -0.03em;
       }
       .info {
+        position: static;
         width: auto;
-        left: 20px;
-        right: 20px;
+        left: auto;
+        right: auto;
         top: auto;
-        bottom: 28px;
+        bottom: auto;
         text-align: left;
+        margin-top: 28px;
       }
       .info-header {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
         margin-bottom: 10px;
       }
       .info-text {
         font-size: 0.95rem;
-        max-width: 28em;
+        max-width: 32em;
       }
 
       .section { padding: 64px 20px; }
@@ -519,8 +528,8 @@
     }
 
     @media (max-width: 480px) {
-      .brand { font-size: 15.5vw; top: 9vh; line-height: 0.98; }
-      .info-header { font-size: 1.25rem; }
+      .brand { font-size: 15.5vw; line-height: 0.98; }
+      .info-header { font-size: 1.2rem; }
       .info-text { font-size: 0.9rem; }
     }
   </style>
@@ -531,10 +540,14 @@
   <section class="hero">
     <svg class="terrain" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <path id="loop" d="M 200,200 m -178,0 a 178,178 0 1,1 356,0 a 178,178 0 1,1 -356,0" />
+        <path id="loopOuter" d="M 200,200 m -178,0 a 178,178 0 1,1 356,0 a 178,178 0 1,1 -356,0" />
+        <path id="loopInner" d="M 200,200 m -122,0 a 122,122 0 1,1 244,0 a 122,122 0 1,1 -244,0" />
       </defs>
-      <text font-size="12" opacity="0.5">
-        <textPath href="#loop" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Collins Place :: Treasury :: Robin Boyd :: Wood Marsh :: Anzac Station :: Howard Lawson :: Hollywood :: Spanish mission :: Pelligrini's :: Modernism :: Madame Brussels :: NGV :: Roy Grounds :: Hamer Hall :: Inge King :: </textPath>
+      <text font-size="11" opacity="0.55">
+        <textPath href="#loopOuter" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Picasso :: Camelot :: Brutalist :: NGV :: Stained glass :: Cosmos :: John Truscott :: Inge King :: Recital Centre :: </textPath>
+      </text>
+      <text font-size="10" opacity="0.42">
+        <textPath href="#loopInner" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Espresso :: Modernism :: ICI House :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
       </text>
     </svg>
 
