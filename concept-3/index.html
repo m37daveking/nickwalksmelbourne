@@ -154,63 +154,6 @@
     }
     .pill-tab.scale .lbl { color: var(--lime); }
 
-    /* Center pills */
-    .center-pills {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, calc(-50% + 180px));
-      display: flex;
-      gap: 110px;
-      pointer-events: auto;
-      z-index: 5;
-    }
-    .badge {
-      appearance: none;
-      -webkit-appearance: none;
-      background: var(--lime);
-      color: var(--ink);
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      line-height: 1;
-      padding: 7px 14px;
-      border-radius: 20px;
-      border: 1.5px solid var(--ink);
-      box-shadow: 0 0 0 1.5px var(--lime);
-      cursor: pointer;
-      transition: transform 0.15s ease;
-    }
-    .badge.outline {
-      background: transparent;
-      color: var(--ink);
-      box-shadow: none;
-      border: 1px solid var(--ink);
-    }
-    .badge:hover { transform: scale(1.06); }
-    .badge:active { transform: scale(0.96); }
-    .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
-
-    /* Peak spin — each ring layer rotates at its own pace */
-    #walk1 text { transform-origin: 1050px 200px; }
-    #walk2 text { transform-origin: 825px 470px; }
-    #walk3 text { transform-origin: 1280px 670px; }
-    #walk4 text { transform-origin: 380px 90px; }
-    #walk5 text { transform-origin: 750px 680px; }
-
-    .peak.active text:nth-of-type(1) { animation: spinFwd 14s linear; }
-    .peak.active text:nth-of-type(2) { animation: spinRev 22s linear; }
-    .peak.active text:nth-of-type(3) { animation: spinFwd 32s linear; }
-
-    @keyframes spinFwd {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    @keyframes spinRev {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(-360deg); }
-    }
 
     /* Brand title bottom-left */
     .brand {
@@ -249,23 +192,6 @@
       font-size: 0.95rem;
       line-height: 1.4;
       color: rgba(28,28,28,0.7);
-    }
-    .info-pills {
-      display: flex;
-      justify-content: flex-end;
-      gap: 6px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-    .info-pills .badge {
-      font-size: 9px;
-      padding: 5px 10px;
-      border-radius: 14px;
-      box-shadow: 0 0 0 1px var(--lime);
-      border-width: 1px;
-    }
-    .info-pills .badge.outline {
-      box-shadow: none;
     }
 
     /* SECTIONS */
@@ -546,15 +472,55 @@
     }
 
     @media (max-width: 900px) {
-      .hud { gap: 4px; }
-      .pill-tab { padding: 8px 12px; font-size: 1.1rem; }
-      .pill-tab.scale { margin-left: 6px; }
-      .info { width: auto; left: 24px; right: 24px; top: auto; bottom: 24px; }
-      .brand { font-size: 28vw; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .walk-card { grid-template-columns: 1fr; gap: 32px; }
-      .section { padding: 60px 24px; }
-      .back { top: 16px; right: 16px; }
+      .hero {
+        min-height: auto;
+        height: 100svh;
+      }
+      .terrain { opacity: 0.85; }
+      .grid-overlay { opacity: 0.45; }
+      .reticle { display: none; }
+
+      .brand {
+        top: 11vh;
+        left: 20px;
+        right: 20px;
+        font-size: 14vw;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .info {
+        width: auto;
+        left: 20px;
+        right: 20px;
+        top: auto;
+        bottom: 28px;
+        text-align: left;
+      }
+      .info-header {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+      .info-text {
+        font-size: 0.95rem;
+        max-width: 28em;
+      }
+
+      .section { padding: 64px 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .portrait { max-width: 320px; }
+      .strip { padding: 0 20px 64px; }
+      .strip-figure .caption { font-size: 1.1rem; padding: 5px 10px; max-width: 80%; }
+      .walk-card { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
+      .walk-viz { aspect-ratio: 16/9; }
+      .quote-sect { padding: 80px 20px; }
+      footer { padding: 22px 20px; font-size: 9px; flex-direction: column; gap: 8px; }
+      .back { top: 14px; right: 14px; font-size: 9px; padding: 6px 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .brand { font-size: 15.5vw; top: 9vh; line-height: 0.98; }
+      .info-header { font-size: 1.25rem; }
+      .info-text { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -564,11 +530,6 @@
   <section class="hero">
     <svg class="terrain" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
       <defs>
-        <!-- Walk 1 — CBD Lunchtime — Square -->
-        <path id="w1s1" d="M 980,130 L 1120,130 L 1120,270 L 980,270 Z" />
-        <path id="w1s2" d="M 955,105 L 1145,105 L 1145,295 L 955,295 Z" />
-        <path id="w1s3" d="M 930,80  L 1170,80  L 1170,320 L 930,320 Z" />
-
         <!-- Walk 2 — Train and Walk — Line -->
         <path id="w2l1" d="M 200,455 L 1450,455" />
         <path id="w2l2" d="M 200,470 L 1450,470" />
@@ -579,30 +540,11 @@
         <path id="w3c2" d="M 1280,670 m -110,0 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" />
         <path id="w3c3" d="M 1280,670 m -145,0 a 145,145 0 1,1 290,0 a 145,145 0 1,1 -290,0" />
 
-        <!-- Walk 4 — CBD Breakfast — Circle (small) -->
-        <path id="w4c1" d="M 380,90 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0" />
-        <path id="w4c2" d="M 380,90 m -55,0 a 55,55 0 1,1 110,0 a 55,55 0 1,1 -110,0" />
-        <path id="w4c3" d="M 380,90 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
-
         <!-- Walk 5 — Flying Saucers and Stolen Picassos — Circle -->
         <path id="w5c1" d="M 750,680 m -110,0 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" />
         <path id="w5c2" d="M 750,680 m -160,0 a 160,160 0 1,1 320,0 a 160,160 0 1,1 -320,0" />
         <path id="w5c3" d="M 750,680 m -210,0 a 210,210 0 1,1 420,0 a 210,210 0 1,1 -420,0" />
       </defs>
-
-      <!-- Walk 1 — CBD Lunchtime (square) -->
-      <g class="peak" id="walk1">
-        <text font-size="11" opacity="0.95">
-          <textPath href="#w1s1" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Monaco House :: Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
-        </text>
-        <text font-size="10" opacity="0.7" class="accent">
-          <textPath href="#w1s2" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Monaco House :: Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
-        </text>
-        <text font-size="9" opacity="0.5">
-          <textPath href="#w1s3" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Monaco House :: Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
-        </text>
-        <circle cx="1050" cy="200" r="4" fill="#1c1c1c"/>
-      </g>
 
       <!-- Walk 2 — Train and Walk (line) -->
       <g class="peak" id="walk2">
@@ -631,20 +573,6 @@
           <textPath href="#w3c3" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
         </text>
         <circle cx="1280" cy="670" r="4" fill="#1c1c1c"/>
-      </g>
-
-      <!-- Walk 4 — CBD Breakfast (small circle) -->
-      <g class="peak" id="walk4">
-        <text font-size="10" opacity="0.95">
-          <textPath href="#w4c1" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Momentum :: Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
-        </text>
-        <text font-size="9" opacity="0.7" class="accent">
-          <textPath href="#w4c2" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Momentum :: Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
-        </text>
-        <text font-size="8" opacity="0.5">
-          <textPath href="#w4c3" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Momentum :: Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
-        </text>
-        <circle cx="380" cy="90" r="3" fill="#1c1c1c"/>
       </g>
 
       <!-- Walk 5 — Flying Saucers and Stolen Picassos (circle) -->
@@ -677,13 +605,6 @@
       <p class="info-text">
         Join filmmaker and architectural guide Nick Heydon for five walks across the city.
       </p>
-      <div class="info-pills">
-        <button type="button" class="badge" data-peak="walk1" aria-label="Spin CBD Lunchtime">Lunchtime</button>
-        <button type="button" class="badge outline" data-peak="walk2" aria-label="Spin Train and Walk">Train</button>
-        <button type="button" class="badge outline" data-peak="walk3" aria-label="Spin Glamour on the Yarra">Glamour</button>
-        <button type="button" class="badge outline" data-peak="walk4" aria-label="Spin CBD Breakfast">Breakfast</button>
-        <button type="button" class="badge outline" data-peak="walk5" aria-label="Spin Flying Saucers">Saucers</button>
-      </div>
     </div>
   </section>
 
@@ -916,27 +837,5 @@
     <span>Concept 03 — Terrain</span>
   </footer>
 
-  <script>
-    document.querySelectorAll('button[data-peak]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var peak = document.getElementById(btn.dataset.peak);
-        if (!peak) return;
-        peak.classList.remove('active');
-        // Force reflow so the animations can restart if the button is clicked again mid-spin.
-        void peak.getBoundingClientRect();
-        peak.classList.add('active');
-      });
-    });
-
-    document.querySelectorAll('.peak').forEach(function (peak) {
-      var texts = peak.querySelectorAll('text');
-      if (!texts.length) return;
-      // The outermost ring (last text) has the longest spin — wait for it to finish.
-      var slowest = texts[texts.length - 1];
-      slowest.addEventListener('animationend', function () {
-        peak.classList.remove('active');
-      });
-    });
-  </script>
 </body>
 </html>
