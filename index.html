@@ -175,13 +175,15 @@
     .badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 
     /* Peak spin — each ring layer rotates at its own pace */
-    #peakA text { transform-origin: 1180px 420px; }
-    #peakB text { transform-origin: 460px 560px; }
+    #walk1 text { transform-origin: 1050px 200px; }
+    #walk2 text { transform-origin: 825px 470px; }
+    #walk3 text { transform-origin: 1280px 670px; }
+    #walk4 text { transform-origin: 380px 90px; }
+    #walk5 text { transform-origin: 750px 680px; }
 
-    .peak.active text:nth-of-type(1) { animation: spinFwd 12s linear; }
-    .peak.active text:nth-of-type(2) { animation: spinRev 18s linear; }
-    .peak.active text:nth-of-type(3) { animation: spinFwd 26s linear; }
-    .peak.active text:nth-of-type(4) { animation: spinRev 36s linear; }
+    .peak.active text:nth-of-type(1) { animation: spinFwd 14s linear; }
+    .peak.active text:nth-of-type(2) { animation: spinRev 22s linear; }
+    .peak.active text:nth-of-type(3) { animation: spinFwd 32s linear; }
 
     @keyframes spinFwd {
       from { transform: rotate(0deg); }
@@ -233,8 +235,9 @@
     .info-pills {
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
+      gap: 6px;
       margin-top: 16px;
+      flex-wrap: wrap;
     }
     .info-pills .badge {
       font-size: 9px;
@@ -541,51 +544,101 @@
   <section class="hero">
     <svg class="terrain" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
       <defs>
-        <!-- Peak A — CBD (small, 30% smaller) -->
-        <path id="ringA1" d="M 1180,420 m -63,0 a 63,57 0 1,1 126,0 a 63,57 0 1,1 -126,0" />
-        <path id="ringA2" d="M 1180,420 m -105,-7 a 105,94 -8 1,1 210,14 a 105,94 -8 1,1 -210,-14" />
-        <path id="ringA3" d="M 1180,420 m -154,-14 a 154,143 -12 1,1 308,28 a 154,143 -12 1,1 -308,-28" />
-        <path id="ringA4" d="M 1180,420 m -210,-21 a 210,196 -10 1,1 420,42 a 210,196 -10 1,1 -420,-42" />
+        <!-- Walk 1 — CBD Lunchtime — Square -->
+        <path id="w1s1" d="M 980,130 L 1120,130 L 1120,270 L 980,270 Z" />
+        <path id="w1s2" d="M 955,105 L 1145,105 L 1145,295 L 955,295 Z" />
+        <path id="w1s3" d="M 930,80  L 1170,80  L 1170,320 L 930,320 Z" />
 
-        <!-- Peak B — South Yarra / Anzac (larger) -->
-        <path id="ringB1" d="M 460,560 m -110,0 a 110,100 6 1,1 220,0 a 110,100 6 1,1 -220,0" />
-        <path id="ringB2" d="M 460,560 m -200,-8 a 200,180 6 1,1 400,16 a 200,180 6 1,1 -400,-16" />
-        <path id="ringB3" d="M 460,560 m -300,-20 a 300,280 8 1,1 600,40 a 300,280 8 1,1 -600,-40" />
-        <path id="ringB4" d="M 460,560 m -420,-40 a 420,400 10 1,1 840,80 a 420,400 10 1,1 -840,-80" />
+        <!-- Walk 2 — Train and Walk — Line -->
+        <path id="w2l1" d="M 200,455 L 1450,455" />
+        <path id="w2l2" d="M 200,470 L 1450,470" />
+        <path id="w2l3" d="M 200,485 L 1450,485" />
+
+        <!-- Walk 3 — Glamour on the Yarra — Circle -->
+        <path id="w3c1" d="M 1280,670 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+        <path id="w3c2" d="M 1280,670 m -110,0 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" />
+        <path id="w3c3" d="M 1280,670 m -145,0 a 145,145 0 1,1 290,0 a 145,145 0 1,1 -290,0" />
+
+        <!-- Walk 4 — CBD Breakfast — Circle (small) -->
+        <path id="w4c1" d="M 380,90 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0" />
+        <path id="w4c2" d="M 380,90 m -55,0 a 55,55 0 1,1 110,0 a 55,55 0 1,1 -110,0" />
+        <path id="w4c3" d="M 380,90 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
+
+        <!-- Walk 5 — Flying Saucers and Stolen Picassos — Circle -->
+        <path id="w5c1" d="M 750,680 m -110,0 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" />
+        <path id="w5c2" d="M 750,680 m -160,0 a 160,160 0 1,1 320,0 a 160,160 0 1,1 -320,0" />
+        <path id="w5c3" d="M 750,680 m -210,0 a 210,210 0 1,1 420,0 a 210,210 0 1,1 -420,0" />
       </defs>
 
-      <!-- Peak A — Lunch loop -->
-      <g class="peak" id="peakA">
-        <text font-size="13" opacity="0.95">
-          <textPath href="#ringA1" startOffset="0">LUNCH · LUNCH · LUNCH · 45MIN · CBD · SPRING · BOURKE · LUNCH · LUNCH · 45MIN · CBD · </textPath>
+      <!-- Walk 1 — CBD Lunchtime (square) -->
+      <g class="peak" id="walk1">
+        <text font-size="11" opacity="0.95">
+          <textPath href="#w1s1" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Monaco House :: Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
         </text>
-        <text font-size="12" opacity="0.7" class="accent">
-          <textPath href="#ringA2" startOffset="0">--- TOP END --- SPRING STREET --- DOWN BOURKE --- BACK UP --- TOP END --- SPRING STREET --- DOWN BOURKE --- </textPath>
+        <text font-size="10" opacity="0.7" class="accent">
+          <textPath href="#w1s2" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Monaco House :: Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
         </text>
-        <text font-size="11" opacity="0.55">
-          <textPath href="#ringA3" startOffset="0">corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · corner · arcade · doorway · lane · </textPath>
+        <text font-size="9" opacity="0.5">
+          <textPath href="#w1s3" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Monaco House :: Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
         </text>
-        <text font-size="10" opacity="0.4">
-          <textPath href="#ringA4" startOffset="0">notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · notice · </textPath>
-        </text>
-        <circle cx="1180" cy="420" r="5" fill="#1c1c1c"/>
+        <circle cx="1050" cy="200" r="4" fill="#1c1c1c"/>
       </g>
 
-      <!-- Peak B — Train walk -->
-      <g class="peak" id="peakB">
-        <text font-size="13" opacity="0.95">
-          <textPath href="#ringB1" startOffset="0">TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · TRAIN · TRAIN · 2HR · SOUTH YARRA · ANZAC · </textPath>
+      <!-- Walk 2 — Train and Walk (line) -->
+      <g class="peak" id="walk2">
+        <text font-size="11" opacity="0.95">
+          <textPath href="#w2l1" startOffset="0">South Yarra Station :: First class lounge :: Steam :: Lover's Lane :: Arts &amp; Crafts :: Lee Terrace :: Avoca :: Punt :: Wood Marsh :: Monument :: Poolman House :: Robin Boyd :: Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
         </text>
-        <text font-size="12" opacity="0.7" class="accent">
-          <textPath href="#ringB2" startOffset="0">--- STATION TO STATION --- CROSS THE RIVER --- PARKS --- THE LONG WAY --- STATION TO STATION --- CROSS THE RIVER --- PARKS --- </textPath>
+        <text font-size="10" opacity="0.7" class="accent">
+          <textPath href="#w2l2" startOffset="0">South Yarra Station :: First class lounge :: Steam :: Lover's Lane :: Arts &amp; Crafts :: Lee Terrace :: Avoca :: Punt :: Wood Marsh :: Monument :: Poolman House :: Robin Boyd :: Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
         </text>
-        <text font-size="11" opacity="0.55">
-          <textPath href="#ringB3" startOffset="0">park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · park · side street · detour · river · </textPath>
+        <text font-size="9" opacity="0.5">
+          <textPath href="#w2l3" startOffset="0">South Yarra Station :: First class lounge :: Steam :: Lover's Lane :: Arts &amp; Crafts :: Lee Terrace :: Avoca :: Punt :: Wood Marsh :: Monument :: Poolman House :: Robin Boyd :: Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
         </text>
-        <text font-size="10" opacity="0.4" class="peach">
-          <textPath href="#ringB4" startOffset="0">slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · slow · pace · </textPath>
+        <circle cx="200" cy="470" r="4" fill="#1c1c1c"/>
+        <circle cx="1450" cy="470" r="4" fill="#1c1c1c"/>
+      </g>
+
+      <!-- Walk 3 — Glamour on the Yarra (circle) -->
+      <g class="peak" id="walk3">
+        <text font-size="11" opacity="0.95">
+          <textPath href="#w3c1" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
         </text>
-        <circle cx="460" cy="560" r="5" fill="#1c1c1c"/>
+        <text font-size="10" opacity="0.7" class="accent">
+          <textPath href="#w3c2" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
+        </text>
+        <text font-size="9" opacity="0.5" class="peach">
+          <textPath href="#w3c3" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
+        </text>
+        <circle cx="1280" cy="670" r="4" fill="#1c1c1c"/>
+      </g>
+
+      <!-- Walk 4 — CBD Breakfast (small circle) -->
+      <g class="peak" id="walk4">
+        <text font-size="10" opacity="0.95">
+          <textPath href="#w4c1" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Momentum :: Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
+        </text>
+        <text font-size="9" opacity="0.7" class="accent">
+          <textPath href="#w4c2" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Momentum :: Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
+        </text>
+        <text font-size="8" opacity="0.5">
+          <textPath href="#w4c3" startOffset="0">Opium :: Dynamite :: Sex :: Gold :: Momentum :: Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
+        </text>
+        <circle cx="380" cy="90" r="3" fill="#1c1c1c"/>
+      </g>
+
+      <!-- Walk 5 — Flying Saucers and Stolen Picassos (circle) -->
+      <g class="peak" id="walk5">
+        <text font-size="11" opacity="0.95">
+          <textPath href="#w5c1" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Art :: Picasso :: Camelot :: Indigenous Inspiration :: Jeffry Smart :: Brutalist :: NGV :: College of the Arts :: Stained glass :: Cosmos :: Plush :: John Truscott :: Waterfall :: Waterwall :: Inge King :: Recital Centre :: </textPath>
+        </text>
+        <text font-size="10" opacity="0.7" class="accent">
+          <textPath href="#w5c2" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Art :: Picasso :: Camelot :: Indigenous Inspiration :: Jeffry Smart :: Brutalist :: NGV :: College of the Arts :: Stained glass :: Cosmos :: Plush :: John Truscott :: Waterfall :: Waterwall :: Inge King :: Recital Centre :: </textPath>
+        </text>
+        <text font-size="9" opacity="0.5" class="peach">
+          <textPath href="#w5c3" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Art :: Picasso :: Camelot :: Indigenous Inspiration :: Jeffry Smart :: Brutalist :: NGV :: College of the Arts :: Stained glass :: Cosmos :: Plush :: John Truscott :: Waterfall :: Waterwall :: Inge King :: Recital Centre :: </textPath>
+        </text>
+        <circle cx="750" cy="680" r="4" fill="#1c1c1c"/>
       </g>
     </svg>
 
@@ -602,11 +655,14 @@
         See Melbourne <br />like never before.
       </div>
       <p class="info-text">
-        Join filmmaker and architectural guide Nick Heydon for two walks across the city.
+        Join filmmaker and architectural guide Nick Heydon for five walks across the city.
       </p>
       <div class="info-pills">
-        <button type="button" class="badge" data-peak="peakA" aria-label="Spin lunch loop">Lunch Loop</button>
-        <button type="button" class="badge outline" data-peak="peakB" aria-label="Spin train line">Train Line</button>
+        <button type="button" class="badge" data-peak="walk1" aria-label="Spin CBD Lunchtime">Lunchtime</button>
+        <button type="button" class="badge outline" data-peak="walk2" aria-label="Spin Train and Walk">Train</button>
+        <button type="button" class="badge outline" data-peak="walk3" aria-label="Spin Glamour on the Yarra">Glamour</button>
+        <button type="button" class="badge outline" data-peak="walk4" aria-label="Spin CBD Breakfast">Breakfast</button>
+        <button type="button" class="badge outline" data-peak="walk5" aria-label="Spin Flying Saucers">Saucers</button>
       </div>
     </div>
   </section>
@@ -645,37 +701,37 @@
   <section class="section walks">
     <div class="sect-label">
       <span>// 02 — Routes</span>
-      <span>Two on offer</span>
+      <span>Five on offer</span>
     </div>
 
     <div class="walk-card">
       <div class="walk-viz">
-        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <path id="w1r1" d="M 200,150 m -50,0 a 50,46 0 1,1 100,0 a 50,46 0 1,1 -100,0" />
-            <path id="w1r2" d="M 200,150 m -90,-6 a 90,82 -4 1,1 180,12 a 90,82 -4 1,1 -180,-12" />
-            <path id="w1r3" d="M 200,150 m -140,-12 a 140,128 -6 1,1 280,24 a 140,128 -6 1,1 -280,-24" />
+            <path id="p1s1" d="M 170,120 L 230,120 L 230,180 L 170,180 Z" />
+            <path id="p1s2" d="M 150,100 L 250,100 L 250,200 L 150,200 Z" />
+            <path id="p1s3" d="M 130,80  L 270,80  L 270,220 L 130,220 Z" />
           </defs>
-          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#1c1c1c">
-            <textPath href="#w1r1">LUNCH · 45MIN · LUNCH · 45MIN · LUNCH · 45MIN · </textPath>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#1c1c1c">
+            <textPath href="#p1s1">Melbourne Club :: Paris :: Postmodern :: Monaco House :: </textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#4a4640" opacity="0.75">
-            <textPath href="#w1r2">--- SPRING --- BOURKE --- SPRING --- BOURKE --- SPRING --- BOURKE --- </textPath>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#4a4640" opacity="0.75">
+            <textPath href="#p1s2">Meyers Place :: Reed &amp; Barnes :: Treasure :: Grid :: Luxury :: Collins Place :: </textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#1c1c1c" opacity="0.4">
-            <textPath href="#w1r3">corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · corner · doorway · arcade · </textPath>
+          <text font-family="JetBrains Mono, monospace" font-size="7" fill="#1c1c1c" opacity="0.45">
+            <textPath href="#p1s3">Breathe :: Total House :: Lyceum Club :: 6 Degrees :: Waiter's Club :: Parliament :: </textPath>
           </text>
           <circle cx="200" cy="150" r="3" fill="#1c1c1c"/>
         </svg>
       </div>
       <div class="walk-info">
-        <div class="num">// Route 01</div>
-        <h3>Lunch Time Walk</h3>
-        <p>A forty-five-minute loop through the top end of the CBD. Spring Street, down Bourke, and a few corners most people walk past. The right amount of time to clear your head between meetings — or to make a Tuesday feel different.</p>
+        <div class="num">// Route 01 — Square</div>
+        <h3>CBD Lunchtime walks</h3>
+        <p>Shouldn't have had that almond croissant for breakfast? Get out of the office for a pacy stroll through the Paris end of Melbourne. Explore the architecture from the opulence of Treasury to the geometric modernism of Collins Place.</p>
         <div class="walk-stats-row">
           <span class="s s1">45 MIN</span>
           <span class="s s2">$15</span>
-          <span class="s s3">CBD TOP END</span>
+          <span class="s s3">PARIS END · CBD</span>
         </div>
         <a class="book" href="#" target="_blank" rel="noopener">
           Book on TryBooking
@@ -686,33 +742,141 @@
 
     <div class="walk-card">
       <div class="walk-viz">
-        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <path id="w2line" d="M 60,220 Q 140,160 220,180 T 360,80" />
-            <path id="w2r1" d="M 200,150 m -60,0 a 60,54 0 1,1 120,0 a 60,54 0 1,1 -120,0" />
-            <path id="w2r2" d="M 200,150 m -110,-8 a 110,98 -4 1,1 220,16 a 110,98 -4 1,1 -220,-16" />
-            <path id="w2r3" d="M 200,150 m -170,-16 a 170,156 -6 1,1 340,32 a 170,156 -6 1,1 -340,-32" />
+            <path id="p2l1" d="M 40,140 L 360,140" />
+            <path id="p2l2" d="M 40,154 L 360,154" />
+            <path id="p2l3" d="M 40,168 L 360,168" />
           </defs>
-          <text font-family="JetBrains Mono, monospace" font-size="10" fill="#1c1c1c">
-            <textPath href="#w2r1">TRAIN · 2HR · TRAIN · 2HR · TRAIN · 2HR · TRAIN · 2HR · </textPath>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#1c1c1c">
+            <textPath href="#p2l1">South Yarra :: First class lounge :: Steam :: Lover's Lane ::</textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#4a4640" opacity="0.7">
-            <textPath href="#w2r2">--- STH YARRA --- ANZAC --- STH YARRA --- ANZAC --- STH YARRA --- ANZAC --- </textPath>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#4a4640" opacity="0.7">
+            <textPath href="#p2l2">Arts &amp; Crafts :: Avoca :: Wood Marsh :: Robin Boyd ::</textPath>
           </text>
-          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#c47057" opacity="0.7">
-            <textPath href="#w2r3">park · river · side street · detour · park · river · side street · detour · park · river · side street · detour · park · river · side street · detour · </textPath>
+          <text font-family="JetBrains Mono, monospace" font-size="7" fill="#c47057" opacity="0.75">
+            <textPath href="#p2l3">Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
+          </text>
+          <circle cx="40" cy="154" r="3" fill="#1c1c1c"/>
+          <circle cx="360" cy="154" r="3" fill="#1c1c1c"/>
+        </svg>
+      </div>
+      <div class="walk-info">
+        <div class="num">// Route 02 — Line</div>
+        <h3>Train and Walk</h3>
+        <p>Who needs traffic? Catch the train to South Yarra and explore its dirty secrets, engrossing history and the very latest in architecture on this leafy two hour walk. We walk to the soaring cavern of Anzac Station and catch the train home.</p>
+        <div class="walk-stats-row">
+          <span class="s s1">2 HOURS</span>
+          <span class="s s2">$40</span>
+          <span class="s s3">STH YARRA → ANZAC</span>
+        </div>
+        <a class="book" href="#" target="_blank" rel="noopener">
+          Book on TryBooking
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="walk-card">
+      <div class="walk-viz">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <path id="p3c1" d="M 200,150 m -50,0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+            <path id="p3c2" d="M 200,150 m -90,0 a 90,90 0 1,1 180,0 a 90,90 0 1,1 -180,0" />
+            <path id="p3c3" d="M 200,150 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0" />
+          </defs>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#1c1c1c">
+            <textPath href="#p3c1">Punt :: Myryny :: Missionaries :: Golden elm ::</textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#4a4640" opacity="0.7">
+            <textPath href="#p3c2">Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission ::</textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="7" fill="#c47057" opacity="0.6">
+            <textPath href="#p3c3">Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
           </text>
           <circle cx="200" cy="150" r="3" fill="#1c1c1c"/>
         </svg>
       </div>
       <div class="walk-info">
-        <div class="num">// Route 02</div>
-        <h3>Train Walk</h3>
-        <p>Two hours, station to station. South Yarra to Anzac, taking the long way — through the parks, the side streets, and a few of Melbourne's better detours. End where the new line begins.</p>
+        <div class="num">// Route 03 — Circle</div>
+        <h3>Glamour on the Yarra</h3>
+        <p>Don't know anything about those over-the-top Hollywood flats along the river in South Yarra? Well you will now with a deep dive into the coolest architect you never knew you knew, Howard Lawson.</p>
         <div class="walk-stats-row">
           <span class="s s1">2 HOURS</span>
           <span class="s s2">$40</span>
-          <span class="s s3">STH YARRA → ANZAC</span>
+          <span class="s s3">SOUTH YARRA</span>
+        </div>
+        <a class="book" href="#" target="_blank" rel="noopener">
+          Book on TryBooking
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="walk-card">
+      <div class="walk-viz">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <path id="p4c1" d="M 200,150 m -50,0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+            <path id="p4c2" d="M 200,150 m -90,0 a 90,90 0 1,1 180,0 a 90,90 0 1,1 -180,0" />
+            <path id="p4c3" d="M 200,150 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0" />
+          </defs>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#1c1c1c">
+            <textPath href="#p4c1">Opium :: Dynamite :: Sex :: Gold :: Momentum :: </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#4a4640" opacity="0.7">
+            <textPath href="#p4c2">Char Sui :: Espresso :: Surgeon :: Modernism :: ICI House :: Laneways :: </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="7" fill="#1c1c1c" opacity="0.45">
+            <textPath href="#p4c3">Bates Smart :: Sunlight :: Madame Brussels :: Pelligrini's :: Little Lon :: </textPath>
+          </text>
+          <circle cx="200" cy="150" r="3" fill="#1c1c1c"/>
+        </svg>
+      </div>
+      <div class="walk-info">
+        <div class="num">// Route 04 — Circle</div>
+        <h3>CBD Breakfast walks</h3>
+        <p>Have something interesting to say at work today. Espresso power from Pelligrini's fuels a pre-work trip through Chinatown, Little Lon and Australia's first skyscraper. From gold rush opium dens to high tech modernism — all before your first meeting.</p>
+        <div class="walk-stats-row">
+          <span class="s s1">1 HOUR</span>
+          <span class="s s2">$20 + COFFEE</span>
+          <span class="s s3">CHINATOWN · LITTLE LON</span>
+        </div>
+        <a class="book" href="#" target="_blank" rel="noopener">
+          Book on TryBooking
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="walk-card">
+      <div class="walk-viz">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <path id="p5c1" d="M 200,150 m -50,0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+            <path id="p5c2" d="M 200,150 m -90,0 a 90,90 0 1,1 180,0 a 90,90 0 1,1 -180,0" />
+            <path id="p5c3" d="M 200,150 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0" />
+          </defs>
+          <text font-family="JetBrains Mono, monospace" font-size="9" fill="#1c1c1c">
+            <textPath href="#p5c1">UFO :: Castle :: Roy Grounds :: Hamer Hall :: </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="8" fill="#4a4640" opacity="0.7">
+            <textPath href="#p5c2">Art :: Picasso :: Camelot :: Jeffry Smart :: Brutalist :: NGV :: </textPath>
+          </text>
+          <text font-family="JetBrains Mono, monospace" font-size="7" fill="#c47057" opacity="0.6">
+            <textPath href="#p5c3">College of the Arts :: Stained glass :: Cosmos :: John Truscott :: Waterwall :: Inge King :: Recital Centre :: </textPath>
+          </text>
+          <circle cx="200" cy="150" r="3" fill="#1c1c1c"/>
+        </svg>
+      </div>
+      <div class="walk-info">
+        <div class="num">// Route 05 — Circle</div>
+        <h3>Flying Saucers and Stolen Picassos</h3>
+        <p>Think you know the Arts Precinct? You don't. Join me for a wander through some of Australia's most remarkable architecture, from flying saucers and hidden lounges to giant sculptures and subterranean concert halls. Along the way we'll encounter art, ambition, scandal, crime and the extraordinary personalities that shaped Melbourne's cultural heart.</p>
+        <div class="walk-stats-row">
+          <span class="s s1">2 HOURS</span>
+          <span class="s s2">$45</span>
+          <span class="s s3">ARTS PRECINCT</span>
         </div>
         <a class="book" href="#" target="_blank" rel="noopener">
           Book on TryBooking
