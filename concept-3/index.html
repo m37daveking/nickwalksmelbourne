@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nick Walks Melbourne</title>
-  <meta name="description" content="Two walks across Melbourne, rendered as terrain." />
+  <meta name="description" content="Five walks across Melbourne with filmmaker and architectural guide Nick Heydon." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -66,24 +66,25 @@
       z-index: 2;
     }
 
-    /* Terrain SVG */
+    /* Terrain SVG — one circular loop, behind the wordmark */
     .terrain {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 2vh;
+      left: -2%;
+      width: clamp(300px, 58vw, 820px);
+      aspect-ratio: 1/1;
       z-index: 1;
+      pointer-events: none;
     }
     .terrain text {
       font-family: var(--mono);
       fill: var(--ink);
       letter-spacing: 0.04em;
     }
-    .terrain .accent { fill: #4a4640; }
-    .terrain .peach { fill: #c47057; }
 
-    /* Reticle */
+    /* Reticle (hidden — kept for legacy markup) */
     .reticle {
+      display: none;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -528,66 +529,13 @@
   <a href="/" class="back">← Concepts</a>
 
   <section class="hero">
-    <svg class="terrain" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <svg class="terrain" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <!-- Walk 2 — Train and Walk — Line -->
-        <path id="w2l1" d="M 200,455 L 1450,455" />
-        <path id="w2l2" d="M 200,470 L 1450,470" />
-        <path id="w2l3" d="M 200,485 L 1450,485" />
-
-        <!-- Walk 3 — Glamour on the Yarra — Circle -->
-        <path id="w3c1" d="M 1280,670 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
-        <path id="w3c2" d="M 1280,670 m -110,0 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" />
-        <path id="w3c3" d="M 1280,670 m -145,0 a 145,145 0 1,1 290,0 a 145,145 0 1,1 -290,0" />
-
-        <!-- Walk 5 — Flying Saucers and Stolen Picassos — Circle -->
-        <path id="w5c1" d="M 750,680 m -110,0 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" />
-        <path id="w5c2" d="M 750,680 m -160,0 a 160,160 0 1,1 320,0 a 160,160 0 1,1 -320,0" />
-        <path id="w5c3" d="M 750,680 m -210,0 a 210,210 0 1,1 420,0 a 210,210 0 1,1 -420,0" />
+        <path id="loop" d="M 200,200 m -178,0 a 178,178 0 1,1 356,0 a 178,178 0 1,1 -356,0" />
       </defs>
-
-      <!-- Walk 2 — Train and Walk (line) -->
-      <g class="peak" id="walk2">
-        <text font-size="11" opacity="0.95">
-          <textPath href="#w2l1" startOffset="0">South Yarra Station :: First class lounge :: Steam :: Lover's Lane :: Arts &amp; Crafts :: Lee Terrace :: Avoca :: Punt :: Wood Marsh :: Monument :: Poolman House :: Robin Boyd :: Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
-        </text>
-        <text font-size="10" opacity="0.7" class="accent">
-          <textPath href="#w2l2" startOffset="0">South Yarra Station :: First class lounge :: Steam :: Lover's Lane :: Arts &amp; Crafts :: Lee Terrace :: Avoca :: Punt :: Wood Marsh :: Monument :: Poolman House :: Robin Boyd :: Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
-        </text>
-        <text font-size="9" opacity="0.5">
-          <textPath href="#w2l3" startOffset="0">South Yarra Station :: First class lounge :: Steam :: Lover's Lane :: Arts &amp; Crafts :: Lee Terrace :: Avoca :: Punt :: Wood Marsh :: Monument :: Poolman House :: Robin Boyd :: Wall of Hate :: Archer :: Peter McIntyre :: Anzac Station</textPath>
-        </text>
-        <circle cx="200" cy="470" r="4" fill="#1c1c1c"/>
-        <circle cx="1450" cy="470" r="4" fill="#1c1c1c"/>
-      </g>
-
-      <!-- Walk 3 — Glamour on the Yarra (circle) -->
-      <g class="peak" id="walk3">
-        <text font-size="11" opacity="0.95">
-          <textPath href="#w3c1" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
-        </text>
-        <text font-size="10" opacity="0.7" class="accent">
-          <textPath href="#w3c2" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
-        </text>
-        <text font-size="9" opacity="0.5" class="peach">
-          <textPath href="#w3c3" startOffset="0">Punt :: Myryny :: Missionaries :: Golden elm :: Stratton Heights :: Precipice :: Hollywood :: Pleasure gardens :: Spanish mission :: Howard Lawson :: Fire :: Recycle :: Saltire :: Beverley Hills :: Pool :: Moderne :: </textPath>
-        </text>
-        <circle cx="1280" cy="670" r="4" fill="#1c1c1c"/>
-      </g>
-
-      <!-- Walk 5 — Flying Saucers and Stolen Picassos (circle) -->
-      <g class="peak" id="walk5">
-        <text font-size="11" opacity="0.95">
-          <textPath href="#w5c1" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Art :: Picasso :: Camelot :: Indigenous Inspiration :: Jeffry Smart :: Brutalist :: NGV :: College of the Arts :: Stained glass :: Cosmos :: Plush :: John Truscott :: Waterfall :: Waterwall :: Inge King :: Recital Centre :: </textPath>
-        </text>
-        <text font-size="10" opacity="0.7" class="accent">
-          <textPath href="#w5c2" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Art :: Picasso :: Camelot :: Indigenous Inspiration :: Jeffry Smart :: Brutalist :: NGV :: College of the Arts :: Stained glass :: Cosmos :: Plush :: John Truscott :: Waterfall :: Waterwall :: Inge King :: Recital Centre :: </textPath>
-        </text>
-        <text font-size="9" opacity="0.5" class="peach">
-          <textPath href="#w5c3" startOffset="0">UFO :: Castle :: Roy Grounds :: Hamer Hall :: Art :: Picasso :: Camelot :: Indigenous Inspiration :: Jeffry Smart :: Brutalist :: NGV :: College of the Arts :: Stained glass :: Cosmos :: Plush :: John Truscott :: Waterfall :: Waterwall :: Inge King :: Recital Centre :: </textPath>
-        </text>
-        <circle cx="750" cy="680" r="4" fill="#1c1c1c"/>
-      </g>
+      <text font-size="12" opacity="0.5">
+        <textPath href="#loop" startOffset="0">Melbourne Club :: Paris :: Postmodern :: Collins Place :: Treasury :: Robin Boyd :: Wood Marsh :: Anzac Station :: Howard Lawson :: Hollywood :: Spanish mission :: Pelligrini's :: Modernism :: Madame Brussels :: NGV :: Roy Grounds :: Hamer Hall :: Inge King :: </textPath>
+      </text>
     </svg>
 
     <div class="grid-overlay"></div>
