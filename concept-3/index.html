@@ -162,7 +162,7 @@
       left: 24px;
       font-family: var(--display);
       font-weight: 500;
-      font-size: 10vw;
+      font-size: clamp(48px, 10vw, 132px);
       line-height: 0.96;
       color: var(--ink);
       letter-spacing: -0.035em;
@@ -382,7 +382,17 @@
       line-height: 1.05;
       letter-spacing: -0.025em;
       color: var(--ink);
-      margin-bottom: 24px;
+      margin-bottom: 6px;
+    }
+    .walk-info .walk-subtitle {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(1rem, 1.9vw, 1.7rem);
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      opacity: 0.6;
+      margin: 0 0 24px;
     }
     .walk-info p {
       font-family: var(--serif);
@@ -578,7 +588,7 @@
       <div class="portrait">
         <span class="ticks">+ 37.8°S / 144.9°E</span>
         <img src="../preferredphoto1.jpg" alt="Nick Heydon" />
-        <span class="plabel">N. Heydon · operator</span>
+        <span class="plabel">NICK HEYDON · YOUR GUIDE</span>
       </div>
       <div class="about-copy">
         <h2>Melbourne is <em>one of the</em><br />world's great cities.</h2>
@@ -628,7 +638,8 @@
       </div>
       <div class="walk-info">
         <div class="num">// Route 01</div>
-        <h3>CBD Lunchtime walks</h3>
+        <h3>CBD Lunchtime Walk</h3>
+        <div class="walk-subtitle">Top End of Town</div>
         <p>Shouldn't have had that almond croissant for breakfast? Get out of the office for a pacy stroll through the Paris end of Melbourne. Explore the architecture from the opulence of Treasury to the geometric modernism of Collins Place.</p>
         <div class="walk-stats-row">
           <span class="s s1">45 MIN</span>
@@ -664,7 +675,8 @@
       </div>
       <div class="walk-info">
         <div class="num">// Route 02</div>
-        <h3>Train and Walk</h3>
+        <h3>Train &amp; Walk</h3>
+        <div class="walk-subtitle">South Yarra to Anzac Station</div>
         <p>Who needs traffic? Catch the train to South Yarra and explore its dirty secrets, engrossing history and the very latest in architecture on this leafy two hour walk. We walk to the soaring cavern of Anzac Station and catch the train home.</p>
         <div class="walk-stats-row">
           <span class="s s1">2 HOURS</span>
@@ -700,7 +712,8 @@
       </div>
       <div class="walk-info">
         <div class="num">// Route 03</div>
-        <h3>Glamour on the Yarra</h3>
+        <h3>Howard Lawson</h3>
+        <div class="walk-subtitle">Glamour by the Yarra</div>
         <p>Don't know anything about those over-the-top Hollywood flats along the river in South Yarra? Well you will now with a deep dive into the coolest architect you never knew you knew, Howard Lawson.</p>
         <div class="walk-stats-row">
           <span class="s s1">2 HOURS</span>
@@ -736,11 +749,12 @@
       </div>
       <div class="walk-info">
         <div class="num">// Route 04</div>
-        <h3>CBD Breakfast walks</h3>
+        <h3>CBD Espresso &amp; Architecture</h3>
+        <div class="walk-subtitle">Early morning</div>
         <p>Have something interesting to say at work today. Espresso power from Pelligrini's fuels a pre-work trip through Chinatown, Little Lon and Australia's first skyscraper. From gold rush opium dens to high tech modernism — all before your first meeting.</p>
         <div class="walk-stats-row">
           <span class="s s1">1 HOUR</span>
-          <span class="s s2">$20 + COFFEE</span>
+          <span class="s s2">$20 INCL COFFEE</span>
           <span class="s s3">CHINATOWN · LITTLE LON</span>
         </div>
         <a class="book" href="#" target="_blank" rel="noopener">
@@ -772,11 +786,12 @@
       </div>
       <div class="walk-info">
         <div class="num">// Route 05</div>
-        <h3>Flying Saucers and Stolen Picassos</h3>
+        <h3>Arts Precinct</h3>
+        <div class="walk-subtitle">Flying Saucers &amp; Stolen Picassos</div>
         <p>Think you know the Arts Precinct? You don't. Join me for a wander through some of Australia's most remarkable architecture, from flying saucers and hidden lounges to giant sculptures and subterranean concert halls. Along the way we'll encounter art, ambition, scandal, crime and the extraordinary personalities that shaped Melbourne's cultural heart.</p>
         <div class="walk-stats-row">
           <span class="s s1">2 HOURS</span>
-          <span class="s s2">$45</span>
+          <span class="s s2">$40</span>
           <span class="s s3">ARTS PRECINCT</span>
         </div>
         <a class="book" href="#" target="_blank" rel="noopener">
