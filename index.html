@@ -21,6 +21,7 @@
       --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     html, body {
       background: var(--page);
       color: var(--ink);
@@ -176,6 +177,27 @@
       line-height: 1.4;
       color: rgba(28,28,28,0.72);
     }
+    .info .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid var(--ink);
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+    .info .cta-button:hover { transform: translateY(-1px); background: var(--ink); color: var(--lime); }
+    .info .cta-button .arrow { font-size: 16px; line-height: 1; transition: transform 0.15s ease; }
+    .info .cta-button:hover .arrow { transform: translateY(2px); }
 
     /* SECTIONS */
     .section {
@@ -584,6 +606,7 @@
       <p class="info-text">
         Join architectural guide Nick Heydon<br />for walks across the city.
       </p>
+      <a class="cta-button" href="#walks">Upcoming walks <span class="arrow">↓</span></a>
     </div>
   </section>
 
@@ -619,7 +642,7 @@
     </div>
   </section>
 
-  <section class="section walks">
+  <section class="section walks" id="walks">
     <div class="sect-label">
       <span>// 02 — Routes</span>
       <span>On offer</span>
