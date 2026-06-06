@@ -318,6 +318,8 @@
       padding-bottom: 2px;
     }
     .walk-cta:hover { opacity: 0.6; }
+    .walk-cta.disabled { color: var(--soft); border-bottom-style: dashed; cursor: not-allowed; }
+    .walk-cta.disabled:hover { opacity: 1; }
     .walk-photo {
       align-self: stretch;
       background: #eae6df;
@@ -555,7 +557,7 @@
       </div>
       <div class="walk-desc">
         <p>Have something interesting to say at work today. Espresso power from Pelligrini's fuels a pre-work trip through Chinatown, Little Lon and Australia's first skyscraper. From gold rush opium dens to high tech modernism — all before your first meeting.</p>
-        <a class="walk-cta" href="https://www.trybooking.com/DMXCI" target="_blank" rel="noopener">Book on TryBooking →</a>
+        <span class="walk-cta disabled" aria-disabled="true">Coming Soon</span>
       </div>
       <div class="walk-photo">
         <img src="../nickphoto.webp" alt="The CBD on a breakfast walk" />

@@ -527,6 +527,8 @@
     .walk-cta:hover { background: var(--ink); color: var(--sage); }
     .walk-cta:hover .arrow { background: var(--sage); }
     .walk-cta:hover .arrow svg path { stroke: var(--ink); }
+    .walk-cta.disabled { background: var(--sage-dark); opacity: 0.55; cursor: not-allowed; }
+    .walk-cta.disabled:hover { background: var(--sage-dark); color: var(--ink); }
     .walk-cta .arrow {
       width: 56px; height: 56px;
       background: var(--ink);
@@ -835,12 +837,9 @@
             <span>Pelligrini's · ICI House</span>
           </div>
         </div>
-        <a class="walk-cta" href="https://www.trybooking.com/DMXCI" target="_blank" rel="noopener">
-          <div class="arrow">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="white" stroke-width="2.5" stroke-linecap="square"/></svg>
-          </div>
-          <div class="label">Book on<br />TryBooking</div>
-        </a>
+        <span class="walk-cta disabled" aria-disabled="true">
+          <div class="label">Coming<br />Soon</div>
+        </span>
       </div>
 
       <div class="walk-row">

@@ -370,6 +370,14 @@
     .walk.alt .book { background: var(--ink); }
     .book svg { width: 14px; height: 14px; }
     .book:hover { background: var(--red); }
+    .book.disabled {
+      background: transparent;
+      color: var(--ink);
+      opacity: 0.45;
+      border: 1px dashed var(--ink);
+      cursor: not-allowed;
+    }
+    .book.disabled:hover { background: transparent; opacity: 0.45; }
 
     /* QUOTE */
     .quote {
@@ -571,10 +579,7 @@
           <span class="stat">Chinatown · Little Lon</span>
         </div>
         <p>Have something interesting to say at work today. Espresso power from Pelligrini's fuels a pre-work trip through Chinatown, Little Lon and Australia's first skyscraper. From gold rush opium dens to high tech modernism — all before your first meeting.</p>
-        <a class="book" href="https://www.trybooking.com/DMXCI" target="_blank" rel="noopener">
-          Book on TryBooking
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
+        <span class="book disabled" aria-disabled="true">Coming Soon</span>
       </article>
 
       <article class="walk wide">

@@ -463,6 +463,13 @@
     }
     .book:hover { background: var(--cream); }
     .book svg { width: 14px; height: 14px; }
+    .book.disabled {
+      background: transparent;
+      color: rgba(28,28,28,0.5);
+      border: 1px dashed rgba(28,28,28,0.3);
+      cursor: not-allowed;
+    }
+    .book.disabled:hover { background: transparent; color: rgba(28,28,28,0.5); }
 
     /* Quote */
     .quote-sect {
@@ -789,10 +796,7 @@
           <span class="s s2">$20 INCL COFFEE</span>
           <span class="s s3">CHINATOWN · LITTLE LON</span>
         </div>
-        <a class="book" href="https://www.trybooking.com/DMXCI" target="_blank" rel="noopener">
-          Book on TryBooking
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
+        <span class="book disabled" aria-disabled="true">Coming Soon</span>
       </div>
     </div>
 
