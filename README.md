@@ -27,11 +27,11 @@ The homepage and `concept-3/index.html` are kept in sync by hand. If you change 
 
 | # | Title | Subhead | Duration / Price | TryBooking |
 |---|---|---|---|---|
-| 01 | CBD Lunchtime Walk | Top End of Town | 45 min / $15 | [DMWRF](https://www.trybooking.com/DMWRF) |
-| 02 | Train & Walk | South Yarra to Anzac Station | 2 hr / $40 | [DMWYX](https://www.trybooking.com/DMWYX) |
-| 03 | Howard Lawson | Glamour by the Yarra | 2 hr / $40 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
-| 04 | CBD Espresso & Architecture | Early morning | 1 hr / $20 incl coffee | _Coming Soon — booking disabled_ |
-| 05 | Arts Precinct | Flying Saucers & Stolen Picassos | 2 hr / $40 | [DMXDT](https://www.trybooking.com/DMXDT) |
+| 01 | CBD Lunchtime Walk | Top End of Town | 45 min / $25 | [DMWRF](https://www.trybooking.com/DMWRF) |
+| 02 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
+| 03 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
+| 04 | CBD Espresso & Architecture | Early morning | 1 hr / $25 incl coffee | _Coming Soon — booking disabled_ |
+| 05 | Arts Precinct | Flying Saucers & Stolen Picassos | 2 hr / $50 | [DMXDT](https://www.trybooking.com/DMXDT) |
 
 ## Type & palette (Concept 3 / live)
 
