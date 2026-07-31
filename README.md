@@ -79,7 +79,7 @@ python3 -m http.server 8000
 
 GitHub: https://github.com/m37daveking/nickwalksmelbourne
 
-Pushing to `main` does **not** auto-deploy — the Vercel project isn't linked to the GitHub repo. Deploy manually with the Vercel CLI from this directory:
+The Vercel project is linked to the GitHub repo, so pushing to `main` auto-deploys to production (confirmed working 1 Aug 2026). No manual deploy step needed, though the CLI still works if required:
 
 ```sh
 npx vercel@latest deploy --prod --yes
