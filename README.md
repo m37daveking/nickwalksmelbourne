@@ -27,11 +27,11 @@ The homepage and `concept-3/index.html` are kept in sync by hand. If you change 
 
 | # | Title | Subhead | Duration / Price | TryBooking |
 |---|---|---|---|---|
-| 01 | CBD Lunchtime Walk | Top End of Town | 45 min / $25 | [DMWRF](https://www.trybooking.com/DMWRF) |
-| 02 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
-| 03 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
-| 04 | CBD Espresso & Architecture | Early morning | 1 hr / $25 incl coffee | _Coming Soon — booking disabled_ |
-| 05 | Arts Precinct | Flying Saucers & Stolen Picassos | 2 hr / $50 | [DMXDT](https://www.trybooking.com/DMXDT) |
+| 01 | Arts Precinct | Flying Saucers & Stolen Picassos | 2 hr / $50 | [DMXDT](https://www.trybooking.com/DMXDT) |
+| 02 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
+| 03 | CBD Lunchtime Walk | Top End of Town | 45 min / $25 | [DMWRF](https://www.trybooking.com/DMWRF) |
+| 04 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
+| 05 | CBD Espresso & Architecture | Early morning | 1 hr / $25 incl coffee | _Coming Soon — booking disabled_ |
 
 ## Type & palette (Concept 3 / live)
 
@@ -41,6 +41,27 @@ The homepage and `concept-3/index.html` are kept in sync by hand. If you change 
 - Page: `#fdfcf8` warm off-white
 - Ink: `#1c1c1c`
 - Lime highlight: `#e9f0a6` (used for em / book buttons / portrait pill)
+
+## Newsletter (planned)
+
+Research findings from July 2026. No signup form on the site yet.
+
+The form itself is just styled HTML that POSTs to a provider endpoint, so any of these work without adding a build step. The decision is the sending platform:
+
+| Provider | Free tier | Verdict |
+|---|---|---|
+| MailerLite | 1,000 subs, 12k emails/mo | **Recommended.** Easiest editor for a non-technical sender, no meaningful feature cuts on free, cheap beyond it |
+| Kit (ex-ConvertKit) | 10,000 subs | Close second. Bigger free ceiling, good plain-HTML embeds, pushier about upgrades |
+| Buttondown | 100 subs | Simplest and most tasteful, but the free ceiling arrives fast |
+| Mailchimp | 500 subs, 1k emails/mo | Stingy free tier, bloated editor. Skip |
+| Substack | Unlimited | Wrong shape: a publishing destination, not operational email. Embeds via clunky iframe. Skip |
+
+Implementation plan when ready:
+
+- Nick creates the account; the site needs only the form ID / endpoint URL
+- Build the signup block in our own HTML/CSS (lime highlight, JetBrains Mono labels) rather than the provider's widget
+- Add to both `index.html` and `concept-3/index.html`
+- Seed the list from TryBooking booking exports (attendee emails; add a consent checkbox at booking ideally). Providers handle unsubscribe links and Australian spam-act compliance
 
 ## Contact
 
