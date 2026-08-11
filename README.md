@@ -27,7 +27,7 @@ The homepage and `concept-3/index.html` are kept in sync by hand. If you change 
 
 | # | Title | Subhead | Duration / Price | TryBooking |
 |---|---|---|---|---|
-| 01 | Arts Precinct | Flying Saucers & Stolen Picassos | 2 hr / $50 | [DOMNY](https://www.trybooking.com/DOMNY) |
+| 01 | Building Creative Melbourne | How architecture, art and big ideas shaped our city | 2 hr / $50 | [DOMNY](https://www.trybooking.com/DOMNY) |
 | 02 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
 | 03 | CBD Lunchtime Walk | Top End of Town | 45 min / $25 | [DMWRF](https://www.trybooking.com/DMWRF) |
 | 04 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
