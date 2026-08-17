@@ -475,16 +475,47 @@
     /* Quote */
     .quote-sect {
       padding: 140px 32px;
-      text-align: center;
+    }
+    .quote-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .quote-figure {
+      position: relative;
+      aspect-ratio: 4/5;
+      border: 1px solid rgba(28,28,28,0.2);
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .quote-figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .quote-figure .plabel {
+      position: absolute;
+      bottom: 12px; left: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      background: var(--lime);
+      padding: 4px 8px;
+      text-transform: uppercase;
+      z-index: 2;
     }
     .quote-sect blockquote {
       font-family: var(--serif);
       font-style: italic;
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(2rem, 4vw, 3.4rem);
       line-height: 1.15;
       color: var(--ink);
-      max-width: 1000px;
-      margin: 0 auto;
+      margin: 0;
     }
     .quote-sect blockquote em {
       font-style: normal;
@@ -572,6 +603,8 @@
       .walk-card { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
       .walk-viz { aspect-ratio: 16/9; }
       .quote-sect { padding: 80px 20px; }
+      .quote-grid { grid-template-columns: 1fr; gap: 32px; }
+      .quote-figure { max-width: 380px; width: 100%; }
       footer { padding: 36px 20px; font-size: 13px; flex-direction: column; gap: 12px; align-items: flex-start; }
     }
 
@@ -840,8 +873,16 @@
 </section>
 
   <section class="quote-sect">
-    <blockquote>"A city only <em>opens up</em> when you slow down enough to read it."</blockquote>
-    <cite>— Nick</cite>
+    <div class="quote-grid">
+      <figure class="quote-figure">
+        <img src="image9.jpeg" alt="Nick pointing out a building to a walk group in South Yarra" loading="lazy" />
+        <span class="plabel">On the walk</span>
+      </figure>
+      <div class="quote-body">
+        <blockquote>"A city only <em>opens up</em> when you slow down enough to read it."</blockquote>
+        <cite>— Nick</cite>
+      </div>
+    </div>
   </section>
 
   <footer>
