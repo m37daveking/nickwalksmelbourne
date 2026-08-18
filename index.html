@@ -599,7 +599,23 @@
       .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .portrait { max-width: 320px; }
       .strip { padding: 0 20px 64px; }
-      .strip-figure .caption { font-size: 1.1rem; padding: 5px 10px; max-width: 80%; }
+      .strip-figure { display: flex; flex-direction: column; }
+      .strip-figure .hud-tl { position: static; padding: 12px 12px 10px; }
+      .strip-figure img {
+        max-height: none;
+        aspect-ratio: 2.7 / 1;
+        object-fit: cover;
+        object-position: top;
+      }
+      .strip-figure .caption {
+        position: static;
+        align-self: flex-end;
+        background: transparent;
+        font-size: 1.1rem;
+        padding: 10px 12px 12px;
+        max-width: 80%;
+        text-align: right;
+      }
       .walk-card { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
       .walk-viz { aspect-ratio: 16/9; }
       .quote-sect { padding: 80px 20px; }
