@@ -16,9 +16,9 @@ Plain static HTML, no build step. Five files render the live site and three alte
 ├── concept-3/index.html    # Terrain — current live concept
 ├── concept-4/index.html    # Quiet draft (Insel Hombroich-inspired)
 ├── vercel.json             # Clean URLs, no trailing slash
-├── preferredphoto1.jpg     # Top portrait — Nick + Tudor house
-├── preferredphoto2.jpg     # Closing quote — tour group only (cropped)
-├── image9.jpeg             # FIELD strip — Nick with a group in South Yarra
+├── preferredphoto1.jpg     # Closing quote — Nick + Tudor house
+├── preferredphoto2.jpg     # FIELD strip — tour group only (cropped, mirrored)
+├── image9.jpeg             # Top portrait — Nick with a group in South Yarra
 └── design{1,2,3,4}.js      # Original React design refs (unused, kept for archive)
 ```
 
