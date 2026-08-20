@@ -17,7 +17,8 @@ Plain static HTML, no build step. Five files render the live site and three alte
 ├── concept-4/index.html    # Quiet draft (Insel Hombroich-inspired)
 ├── vercel.json             # Clean URLs, no trailing slash
 ├── preferredphoto1.jpg     # Top portrait — Nick + Tudor house
-├── preferredphoto2.jpg     # Bottom strip — tour group only (cropped)
+├── preferredphoto2.jpg     # Closing quote — tour group only (cropped)
+├── image9.jpeg             # FIELD strip — Nick with a group in South Yarra
 └── design{1,2,3,4}.js      # Original React design refs (unused, kept for archive)
 ```
 
@@ -27,9 +28,9 @@ The homepage and `concept-3/index.html` are kept in sync by hand. If you change 
 
 | # | Title | Subhead | Duration / Price | TryBooking |
 |---|---|---|---|---|
-| 01 | Building Creative Melbourne | How architecture, art and big ideas shaped our city | 2 hr / $50 | [DOMNY](https://www.trybooking.com/DOMNY) |
-| 02 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
-| 03 | CBD Lunchtime Walk | Top End of Town | 45 min / $25 | [DMWRF](https://www.trybooking.com/DMWRF) |
+| 01 | City Lunchtime Walk | Top End of Town | 45 min / $25 | [DPCPF](https://www.trybooking.com/DPCPF) |
+| 02 | Building Creative Melbourne | How architecture, art and big ideas shaped our city | 2 hr / $50 | [DOMNY](https://www.trybooking.com/DOMNY) |
+| 03 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
 | 04 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
 | 05 | CBD Espresso & Architecture | Early morning | 1 hr / $25 incl coffee | _Coming Soon — booking disabled_ |
 
