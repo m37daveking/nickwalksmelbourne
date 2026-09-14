@@ -6,33 +6,59 @@ Architectural walking tour site for Nick Heydon.
 
 ## Structure
 
-Plain static HTML, no build step. Five files render the live site and three alternate concept drafts.
+Plain static HTML, no build step. The homepage keeps its styles inline; the tour pages and the hub share `site.css`.
 
 ```
 .
-├── index.html              # Homepage (live) — mirrors concept-3
-├── concept-1/index.html    # Editorial draft (Outfit, bold colour)
-├── concept-2/index.html    # Field Notes draft (sage panels, dossier)
-├── concept-3/index.html    # Terrain — current live concept
-├── concept-4/index.html    # Quiet draft (Insel Hombroich-inspired)
-├── vercel.json             # Clean URLs, no trailing slash
-├── preferredphoto1.jpg     # Closing quote — Nick + Tudor house
-├── preferredphoto2.jpg     # FIELD strip — tour group only (cropped, mirrored)
-├── image9.jpeg             # Top portrait — Nick with a group in South Yarra
-└── design{1,2,3,4}.js      # Original React design refs (unused, kept for archive)
+├── index.html                                    # Homepage (live)
+├── melbourne-architecture-walking-tours.html     # Hub page listing every walk
+├── melbourne-lunchtime-walking-tour.html         # Route 01 · City Lunchtime Walk
+├── building-creative-melbourne-walking-tour.html # Route 02 · Building Creative Melbourne
+├── howard-lawson-walking-tour-melbourne.html     # Route 03 · Howard Lawson
+├── south-yarra-architecture-walking-tour.html    # Route 04 · Train & Walk
+├── site.css                                      # Shared styles for the hub and tour pages
+├── sitemap.xml / robots.txt                      # Crawl config (submit sitemap in Search Console)
+├── favicon.svg, favicon-32.png, apple-touch-icon.png
+├── logo.png                                      # Wordmark used in Organization schema
+├── og-image.png                                  # Social share image
+├── concept-{1..4}/index.html                     # Design drafts, noindexed
+├── vercel.json                                   # Clean URLs, no trailing slash
+├── image9.jpeg                                   # Portrait — Nick with a group in South Yarra
+├── preferredphoto1.jpg                           # Closing quote — Nick + Tudor house
+├── preferredphoto2.jpg                           # FIELD strip — tour group only (mirrored)
+├── *.webp                                        # Optimised copies used on the tour pages
+└── design{1,2,3,4}.js                            # Original React design refs (unused, archive)
 ```
 
-The homepage and `concept-3/index.html` are kept in sync by hand. If you change one, change the other.
+Clean URLs mean `melbourne-lunchtime-walking-tour.html` is served at `/melbourne-lunchtime-walking-tour`. Locally with `python3 -m http.server` you need the `.html`.
+
+The concept drafts diverged from the homepage in August 2026 and are no longer kept in sync. They carry a `noindex` meta tag so Google does not treat them as duplicates.
+
+## SEO and AI search
+
+Implemented September 2026 from the NWM Website SEO / AI Search Brief:
+
+- Homepage title, meta description and a visible H1 ("Architecture Walking Tours of Melbourne") alongside the "Melbourne rewards curiosity" brand line. The big wordmark is a `div`, so each page has one H1.
+- One permanent page per walk with unique copy, meeting point, practical details, a short FAQ and a booking CTA. Meeting points come from the TryBooking event pages.
+- A hub page at `/melbourne-architecture-walking-tours` linking every walk.
+- Canonical URLs, Open Graph tags, favicon, `sitemap.xml`, `robots.txt`.
+- JSON-LD: `LocalBusiness` + `WebSite` on the homepage, `TouristTrip` + `FAQPage` + `BreadcrumbList` on each tour page, `CollectionPage` + `ItemList` + `FAQPage` on the hub.
+- Internal links: homepage walk cards link to their pages, a footer nav on every page, and a "More walks" block on each tour page.
+
+After each deploy that changes these pages: validate with Google's Rich Results Test, then in Search Console submit `sitemap.xml` and request indexing of the changed URLs.
+
+Things Nick should confirm on the tour pages: the private/corporate walk offer, the "Names that come up" lists (taken from the route loop graphics), and the short Howard Lawson biography.
 
 ## The walks
 
 | # | Title | Subhead | Duration / Price | TryBooking |
 |---|---|---|---|---|
-| 01 | City Lunchtime Walk | Top End of Town | 45 min / $25 | [DPCPF](https://www.trybooking.com/DPCPF) |
+| 01 | City Lunchtime Walk | See Melbourne in your lunch break | 45 min / $25 | [DPCPF](https://www.trybooking.com/DPCPF) |
 | 02 | Building Creative Melbourne | How architecture, art and big ideas shaped our city | 2 hr / $50 | [DOMNY](https://www.trybooking.com/DOMNY) |
-| 03 | Howard Lawson | Glamour by the Yarra | 2 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
+| 03 | Howard Lawson | Glamour by the Yarra | 2.5 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
 | 04 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
-| 05 | CBD Espresso & Architecture | Early morning | 1 hr / $25 incl coffee | _Coming Soon — booking disabled_ |
+
+The CBD Espresso & Architecture walk was dropped from the site on 8 September 2026 and has no page. The brief suggested `/melbourne-cbd-architecture-walking-tour/` for it; add that page if the walk comes back.
 
 ## Type & palette (Concept 3 / live)
 
