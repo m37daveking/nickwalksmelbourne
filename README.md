@@ -38,7 +38,7 @@ The concept drafts diverged from the homepage in August 2026 and are no longer k
 
 Implemented September 2026 from the NWM Website SEO / AI Search Brief:
 
-- Homepage title, meta description and a visible H1 ("Architecture Walking Tours of Melbourne") alongside the "Melbourne rewards curiosity" brand line. The big wordmark is a `div`, so each page has one H1.
+- Homepage title, meta description and a visible H1 ("Architecture Walking Tours of Melbourne") alongside the "Fall in love with Melbourne" brand line. The big wordmark is a `div`, so each page has one H1.
 - One permanent page per walk with unique copy, meeting point, practical details, a short FAQ and a booking CTA. Meeting points come from the TryBooking event pages.
 - A hub page at `/melbourne-architecture-walking-tours` linking every walk.
 - Canonical URLs, Open Graph tags, favicon, `sitemap.xml`, `robots.txt`.
