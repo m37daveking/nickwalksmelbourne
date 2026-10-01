@@ -12,7 +12,7 @@ Plain static HTML, no build step. The homepage keeps its styles inline; the tour
 .
 ├── index.html                                    # Homepage (live)
 ├── melbourne-architecture-walking-tours.html     # Hub page listing every walk
-├── melbourne-lunchtime-walking-tour.html         # Route 01 · City Lunchtime Walk
+├── melbourne-lunchtime-walking-tour.html         # Route 01 · Nick’s City Hour
 ├── building-creative-melbourne-walking-tour.html # Route 02 · Building Creative Melbourne
 ├── howard-lawson-walking-tour-melbourne.html     # Route 03 · Howard Lawson
 ├── south-yarra-architecture-walking-tour.html    # Route 04 · Train & Walk
@@ -53,7 +53,7 @@ Things Nick should confirm on the tour pages: the private/corporate walk offer, 
 
 | # | Title | Subhead | Duration / Price | TryBooking |
 |---|---|---|---|---|
-| 01 | City Lunchtime Walk | See Melbourne in your lunch break | 45 min / $25 | [DPCPF](https://www.trybooking.com/DPCPF) |
+| 01 | Nick’s City Hour | Get out. Bring your people. See the city differently. | 60 min / $30 | [DPCPF](https://www.trybooking.com/DPCPF) |
 | 02 | Building Creative Melbourne | How architecture, art and big ideas shaped our city | 2 hr / $50 | [DOMNY](https://www.trybooking.com/DOMNY) |
 | 03 | Howard Lawson | Glamour by the Yarra | 2.5 hr / $50 | [events/landing/1597379](https://www.trybooking.com/events/landing/1597379) |
 | 04 | Train & Walk | South Yarra to Anzac Station | 2 hr / $50 | [DMWYX](https://www.trybooking.com/DMWYX) |
